@@ -2,6 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+.xlsx
+.sql
 Resultados/*
 Data/*
 RData/*
