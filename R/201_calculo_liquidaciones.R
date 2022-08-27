@@ -30,15 +30,19 @@ liquidacion <- actualizacion_pensiones %>%
   mutate( decima_tercera = if_else( mes == 8, sbu, 0 ),
           decima_cuarta = if_else( mes == 12, renta_concedida, 0 ) ) %>%
   mutate( total_a_pagar = renta_concedida + decima_tercera + decima_cuarta ) %>%
-  mutate( parte_ivm = coef * total_a_pagar,
-          parte_ce = (1-coef) * total_a_pagar ) %>%
+  mutate( parte_ivm = coef * total_a_pagar ) %>%
+  mutate( periodo = as.Date( paste0(anio, '/', mes, '/01'), '%Y/%m/%d' ) ) %>%
+  mutate( parte_ivm = if_else( periodo < fecha_derecho_ivm, 0, parte_ivm) ) %>%
+  mutate( parte_ce = total_a_pagar - parte_ivm ) %>%
   dplyr::select(cedula,
-                anio,
-                mes,
+                periodo,
+                fecha_derecho_ivm,
                 renta_concedida,
                 decima_tercera,
                 decima_cuarta,
-                total_a_pagar)
+                total_a_pagar,
+                parte_ivm,
+                parte_ce)
 
 #Guardar en un RData--------------------------------------------------------------------------------
 message( '\tGuardando liquidaciones a jubilados' )

@@ -28,7 +28,9 @@ ungroup() %>%
                  anio_f1,
                  imposiciones:= (anios_imposiciones),
                  f1_renta,
-                 fecha_derecho_ivm,
+              edad,
+              edad_derecho_ivm,
+              fecha_derecho_ivm,
                  coef) %>%
   mutate( n = 2022 - anio_f1 + 1) %>%
   mutate( imposiciones = as.integer( imposiciones ) ) %>%

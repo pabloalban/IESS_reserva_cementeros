@@ -13,8 +13,7 @@ tabla_mortalidad <- read_excel(file,
                                     col_names = TRUE,
                                     col_types = NULL,
                                     na = "",
-                                    skip = 0) %>% clean_names()
-
+                                    skip = 0)
 
 #Guardando en un Rdata------------------------------------------------------------------------------
 message( '\tGuardando tabla de mortalidad' )

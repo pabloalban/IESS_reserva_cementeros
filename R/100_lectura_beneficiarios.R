@@ -86,7 +86,15 @@ aux <- beneficiarios %>%
   left_join(cargo, by='cedula') %>%
   filter(CargoHomologado=='Administrativo') %>%
   distinct(cedula, ocupacion_plani_normal,.keep_all = TRUE)
-  
+
+
+beneficiarios <- beneficiarios %>%
+  mutate( edad_derecho_ivm = round(age_calc(fecha_de_nacimiento,
+                                            enddate = fecha_derecho_ivm,
+                                            units = "years"),0) ) %>%
+  mutate(edad =round(age_calc(fecha_de_nacimiento,
+                              enddate = as.Date("31/08/2022","%d/%m/%Y"),
+                              units = "years"),0))
 
 #Guardando en un Rdata------------------------------------------------------------------------------
 message( '\tGuardando beneficiarios CE' )
