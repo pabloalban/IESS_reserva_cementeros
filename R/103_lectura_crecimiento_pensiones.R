@@ -3,7 +3,7 @@ message( paste( rep('-', 100 ), collapse = '' ) )
 message( '\tLectura de SBU' )
 
 #Cargando información financiera--------------------------------------------------------------------
-file<-paste0(parametros$Data, 'crecimiento_pensiones.xlsx' )
+file<-paste0(parametros$Data, 'IESS_crecimiento_pensiones.xlsx' )
 
 #Cargar función tíldes a latex----------------------------------------------------------------------
 source( 'R/503_tildes_a_latex.R', encoding = 'UTF-8', echo = FALSE )

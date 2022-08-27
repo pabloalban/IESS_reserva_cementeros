@@ -24,27 +24,10 @@ parametros$opsys <- Sys.info()[[1]]
 parametros$hostname <- Sys.info()[[4]]
 
 #Servidor de datos
-if ( parametros$hostname %in% c( 'huracan', 'tornado', 'lahar', 'empty', 'tifon','LEOVELEZ',
-                                 'temu-Ubuntu', 'ava.local','DESKTOP-380U0P5', 'DESKTOP-N4VHK6P', 'HP-USER',
-                                 'AIOUIOMTZ513L35') ) {
+if ( parametros$hostname %in% c( 'PCUIOMTDAI3L35') ) {
   # global Risko
-  parametros$data_server <- '/mnt/data/IESS/IESS_estudio/'
-  if ( parametros$hostname %in% c('LEOVELEZ') ){ # máquina samsung
-    parametros$data_server <- 'Z:/IESS/IESS_estudio/'
-  }
-  if ( parametros$hostname %in% c('ava.local') ){ # máquina samsung
-    parametros$data_server <- '/Volumes/data/IESS/IESS_estudio/'
-  }
-  if ( parametros$hostname %in% c('DESKTOP-380U0P5') ){ # máquina teletrabajo
-    parametros$data_server <- paste0( getwd(), '/' )
-  }
-  if( parametros$hostname %in% c('DESKTOP-N4VHK6P') ){
-    parametros$data_server <- paste0( getwd(), '/' )
-  }
-  if( parametros$hostname %in% c('HP-USER') ){
-    parametros$data_server <- paste0( getwd(), '/' )
-  }
-  if( parametros$hostname %in% c('AIOUIOMTZ513L35') ){
+  parametros$data_server <- 'Y:/IESS_reserva_cementeros/'
+  if ( parametros$hostname %in% c('DESKTOP-380U0P5') ){ # máquina samsung
     parametros$data_server <- paste0( getwd(), '/' )
   }
   else {

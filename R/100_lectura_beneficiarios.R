@@ -3,7 +3,7 @@ message( paste( rep('-', 100 ), collapse = '' ) )
 message( '\tLectura de lista de beneficarios' )
 
 #Cargando información financiera--------------------------------------------------------------------
-file<-paste0(parametros$Data, 'beneficiarios.xlsx' )
+file<-paste0(parametros$Data, 'IESS_beneficiarios.xlsx' )
 file_b<-paste0(parametros$Data, 'BaseCementera.txt' )
 
 #Cargar función tíldes a latex----------------------------------------------------------------------
@@ -14,11 +14,15 @@ beneficiarios <- read_excel(file,
                   #sheet = 'CBF',
                   col_names = TRUE,
                   col_types = NULL,
-                  na = "",
-                  skip = 0) %>% clean_names()
-
-
-base <- read.table(file_b,       
+                  na = "NA",
+                  skip = 0) %>% clean_names() %>%
+  mutate( fecha_de_nacimiento = as.Date(fecha_de_nacimiento, "%Y-%m-%d")) %>%
+  mutate( f1_renta = as.Date(f1_renta, "%Y-%m-%d")) %>%  
+  mutate( fecha_derecho_ivm = as.Date(fecha_derecho_ivm, "%Y-%m-%d")) %>%  
+  mutate( fecha_liquidacion_1 = as.Date(fecha_liquidacion_1, "%Y-%m-%d")) %>%
+  mutate( fecha_liquidacion_2 = as.Date(fecha_liquidacion_2, "%Y-%m-%d"))
+  
+base <- read.table(file_b,   
            header = TRUE,
            fill = TRUE,
            sep = "|",      
