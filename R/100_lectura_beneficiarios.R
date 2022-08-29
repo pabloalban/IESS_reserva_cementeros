@@ -94,7 +94,10 @@ beneficiarios <- beneficiarios %>%
                                             units = "years"),0) ) %>%
   mutate(edad =round(age_calc(fecha_de_nacimiento,
                               enddate = as.Date("31/08/2022","%d/%m/%Y"),
-                              units = "years"),0))
+                              units = "years"),0)) %>%
+  mutate( n = edad_derecho_ivm ) %>%
+  mutate( k =  n - edad ) %>%
+  mutate( k = ifelse( k <= 0, NA, k ) )
 
 #Guardando en un Rdata------------------------------------------------------------------------------
 message( '\tGuardando beneficiarios CE' )

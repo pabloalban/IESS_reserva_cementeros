@@ -24,6 +24,7 @@ ungroup() %>%
   mutate( coef = ric_ivm / pension_concedida ) %>%
   dplyr::select( id,
                  cedula,
+                 g,
                  pension_concedida,
                  anio_f1,
                  imposiciones:= (anios_imposiciones),
@@ -31,7 +32,10 @@ ungroup() %>%
               edad,
               edad_derecho_ivm,
               fecha_derecho_ivm,
-                 coef) %>%
+                 coef,
+              edad,
+              n,
+              k) %>%
   mutate( n = 2022 - anio_f1 + 1) %>%
   mutate( imposiciones = as.integer( imposiciones ) ) %>%
   slice(rep(1:n(),n)) %>%
