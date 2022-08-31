@@ -11,10 +11,12 @@ message("\tCalculando reserva matemática")
 derecho_ivm <- actualizacion_pensiones %>%
   filter( edad_derecho_ivm <= edad ) %>%
   filter( anio == 2022) %>%
-  dplyr::select( cedula,
+  dplyr::select( id,
+                 cedula,
                  g,
                  sbu,
                  renta_concedida,
+                 f1_renta,
                  fecha_derecho_ivm,
                  edad_derecho_ivm,
                  coef,
@@ -31,10 +33,12 @@ derecho_ivm <- actualizacion_pensiones %>%
 sin_derecho_ivm <- actualizacion_pensiones %>%
   filter( edad_derecho_ivm > edad ) %>%
   filter( anio == 2022) %>%
-  dplyr::select( cedula,
+  dplyr::select( id,
+                 cedula,
                  g,
                  sbu,
                  renta_concedida,
+                 f1_renta,
                  fecha_derecho_ivm,
                  edad_derecho_ivm,
                  coef,
@@ -82,11 +86,17 @@ reserva_matematica <- rbind( derecho_ivm %>%
                                        k = NA,
                                        n = NA,
                                        res_mat_temporal = NA,
-                                       res_mat_diferida = NA
+                                       res_mat_diferida = NA,
+                                       a_x_n = NA,
+                                       k_a_x = NA
                                        ) %>%
-                               dplyr::select( cedula,
+                               dplyr::select( id,
+                                              cedula,
                                               edad,
                                               g,
+                                              f1_renta,
+                                              fecha_derecho_ivm,
+                                              edad_derecho_ivm,
                                               renta_ivm,
                                               renta_ce,
                                               a_x,
@@ -94,14 +104,20 @@ reserva_matematica <- rbind( derecho_ivm %>%
                                               N_x_mas_k,
                                               k,
                                               n,
+                                              a_x_n,
                                               res_mat_temporal,
+                                              k_a_x,
                                               res_mat_diferida,
                                               reserva_matematica ),
                              sin_derecho_ivm %>%
                                mutate( a_x = NA ) %>%
-                               dplyr::select( cedula,
+                               dplyr::select( id,
+                                              cedula,
                                               edad,
                                               g,
+                                              f1_renta,
+                                              fecha_derecho_ivm,
+                                              edad_derecho_ivm,
                                               renta_ivm,
                                               renta_ce,
                                               a_x,
@@ -109,9 +125,16 @@ reserva_matematica <- rbind( derecho_ivm %>%
                                               N_x_mas_k,
                                               k,
                                               n,
+                                              a_x_n,
                                               res_mat_temporal,
+                                              k_a_x,
                                               res_mat_diferida,
-                                              reserva_matematica) )
+                                              reserva_matematica ) )
+
+#Beneficio de montepío------------------------------------------------------------------------------
+
+reserva_matematica <- reserva_matematica %>%
+  mutate( montepio = 0.1398 * reserva_matematica )
 
 #Guardar en Rdata-----------------------------------------------------------------------------------
 message( '\tGuardando reservas matemáticas' )

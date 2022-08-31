@@ -1,25 +1,23 @@
+message( paste( rep('-', 100 ), collapse = '' ) )
 message( '\tLectura de la proyección de precios' )
 
 # Carga de datos -----------------------------------------------------------------------------------
-file_liquidaciones <- paste0( parametros$RData, 'IESS_liquidaciones.RData' )
-load(paste0(parametros$RData, "IESS_listado_beneficiarios.Rdata"))
-
-load( file = file_liquidaciones )
+load(paste0(parametros$RData, "IESS_beneficiarios.RData"))
+load(paste0(parametros$RData, "IESS_liquidacion.RData"))
 
 #Cargar función tíldes a latex----------------------------------------------------------------------
 source( 'R/503_tildes_a_latex.R', encoding = 'UTF-8', echo = FALSE )
 
-message( '\tGenerando nombres de beneficiarios de liquidaciones' )
+message( '\tGenerando nombres de beneficiarios' )
 #1. Tabla resumen recaudación total-----------------------------------------------------------------
-for (j in c(1:nrow(lista_ben))) {
+for (j in c(1:nrow(beneficiarios))) {
   
-  aux <- lista_ben %>%
-    filter( id_ben == j) %>%
-    select( -id_ben ) %>%
-    mutate( fecha_fallecimiento = as.character(fecha_fallecimiento),
-            fecha_inicio = as.character(fecha_inicio),
-            fecha_fin  = as.character(fecha_fin ) ) %>%
-    select( apellidos_y_nombres) 
+  aux <- beneficiarios %>%
+    filter( id == j) %>%
+    select( -id ) %>%
+    mutate( f1_renta = as.character(f1_renta),
+            fecha_derecho_ivm  = as.character(fecha_derecho_ivm ) ) %>%
+    dplyr::select( nombre ) 
   
   aux <- data.frame(lapply(aux, function(x) { if(is.character(x)) gsub("Ñ", "$\\tilde{\\text{N}}$", x, fixed = TRUE) else x }))
   

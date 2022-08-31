@@ -10,7 +10,8 @@ message("\tCalculando intereses")
 #Calculo de intereses Primer pago-------------------------------------------------------------------
 
 interes_1 <- beneficiarios %>%
-  dplyr::select( cedula,
+  dplyr::select( id,
+                 cedula,
                  liquidacion_1,
                  fecha_liquidacion_1 ) %>%
   mutate( anio_f1 = year( fecha_liquidacion_1 ),
@@ -43,7 +44,8 @@ interes_1 <- beneficiarios %>%
   mutate( n_meses = n() - 1 ) %>%
   ungroup() %>%
   filter( anio == 2022, mes == 8 ) %>%
-  dplyr::select( cedula,
+  dplyr::select( id,
+                 cedula,
                  liquidacion:=liquidacion_1,
                  fecha_liquidacion:=fecha_liquidacion_1,
                  interes,
@@ -54,7 +56,8 @@ interes_1 <- beneficiarios %>%
 #Calculo de intereses Segundo pago------------------------------------------------------------------
 
 interes_2 <- beneficiarios %>%
-  dplyr::select( cedula,
+  dplyr::select( id,
+                 cedula,
                  liquidacion_2,
                  fecha_liquidacion_2 ) %>%
   filter( !is.na( fecha_liquidacion_2 ) ) %>%
@@ -88,7 +91,8 @@ interes_2 <- beneficiarios %>%
   mutate( n_meses = n() - 1 ) %>%
   ungroup() %>%
   filter( anio == 2022, mes == 8 )  %>%
-  dplyr::select( cedula,
+  dplyr::select( id,
+                 cedula,
                  liquidacion:=liquidacion_2,
                  fecha_liquidacion:=fecha_liquidacion_2,
                  interes,

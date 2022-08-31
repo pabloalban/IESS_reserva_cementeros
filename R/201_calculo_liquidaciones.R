@@ -9,7 +9,8 @@ message("\tCalculando liquidaciones")
 #Pensiones adeudadas--------------------------------------------------------------------------------
 
 liquidacion <- actualizacion_pensiones %>%
-  dplyr::select( cedula,
+  dplyr::select( id,
+                 cedula,
                  f1_renta,
                 anio,
                 sbu,
@@ -34,8 +35,10 @@ liquidacion <- actualizacion_pensiones %>%
   mutate( periodo = as.Date( paste0(anio, '/', mes, '/01'), '%Y/%m/%d' ) ) %>%
   mutate( parte_ivm = if_else( periodo < fecha_derecho_ivm, 0, parte_ivm) ) %>%
   mutate( parte_ce = total_a_pagar - parte_ivm ) %>%
-  dplyr::select(cedula,
-                periodo,
+  dplyr::select(periodo,
+                id,
+                cedula,
+                f1_renta,
                 fecha_derecho_ivm,
                 renta_concedida,
                 decima_tercera,

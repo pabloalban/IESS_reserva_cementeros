@@ -97,7 +97,8 @@ beneficiarios <- beneficiarios %>%
                               units = "years"),0)) %>%
   mutate( n = edad_derecho_ivm ) %>%
   mutate( k =  n - edad ) %>%
-  mutate( k = ifelse( k <= 0, NA, k ) )
+  mutate( k = ifelse( k <= 0, NA, k ) ) %>%
+  mutate( anios_imposiciones = as.integer(anios_imposiciones) )
 
 #Guardando en un Rdata------------------------------------------------------------------------------
 message( '\tGuardando beneficiarios CE' )
