@@ -120,7 +120,8 @@ liquidacion <- actualizacion_pensiones %>%
                  renta_concedida,
                  fecha_derecho_ivm,
                  fecha_defuncion,
-                 coef) %>%
+                 coef,
+                 pension_max) %>%
   group_by( cedula ) %>%
   filter( anio <= year( fecha_defuncion ) ) %>%
   ungroup() %>%
@@ -150,6 +151,7 @@ liquidacion <- actualizacion_pensiones %>%
                 f1_renta,
                 fecha_defuncion,
                 fecha_derecho_ivm,
+                pension_max,
                 renta_concedida,
                 decima_tercera,
                 decima_cuarta,

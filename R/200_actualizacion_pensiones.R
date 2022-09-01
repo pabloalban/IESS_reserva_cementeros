@@ -5,6 +5,7 @@ load(paste0(parametros$RData, "IESS_beneficiarios.RData"))
 load(paste0( parametros$RData, 'IESS_sbu.RData'))
 load(paste0( parametros$RData, 'IESS_pensiones_max_min.RData'))
 load(paste0( parametros$RData, 'IESS_crecimiento_pensiones.RData'))
+load(paste0( parametros$RData, 'IESS_fallecidos.RData'))
 
 message("\tEstableciendo pensiones máximas y mínimas")
 #Límites de las pensiones---------------------------------------------------------------------------
@@ -16,7 +17,8 @@ pensiones_limites <- expand.grid(anio = seq(2007, 2022, 1),imposiciones = pensio
           pension_min = sbu * min_sbu )
 
 #Generación de la malla-----------------------------------------------------------------------------
-pensiones <- beneficiarios %>%
+pensiones <- rbind(beneficiarios,
+                   fallecidos %>% dplyr::select(-fecha_defuncion))%>%
   mutate( anio_f1 = year(f1_renta)) %>%
   group_by( cedula ) %>%
   mutate( pension_concedida = max(ultimo_sueldo, ric_ivm)) %>%

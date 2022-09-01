@@ -50,9 +50,19 @@ for (j in c(1:nrow(beneficiarios))) {
   
   aux <- aux %>%
     pivot_longer(!c(id) ,names_to = "variable", values_to = "valor") %>%
-    dplyr::select(-id)
+    dplyr::select(-id) %>%
+    mutate( variable = c('Cédula de ciudadanía',
+                         'Líquidación pensiones desde fecha de derecho',
+                         'Intereses de valores cancelados por IVM',
+                         'Reserva matemática',
+                         'Beneficios de montepío',
+                         'Gastos administrativos',
+                         'Total a transferir'
+                         ) )
   
   aux_xtab <- xtable( aux, digits = c( 0, 0, 0 ) )
+  
+  aux_xtab <- tildes_a_latex(aux_xtab)
   
   print( aux_xtab, 
          file = paste0( parametros$resultado_tablas, 'iess_resultado_individual_',j,'.tex' ),
@@ -81,7 +91,8 @@ for (j in c(1:nrow(beneficiarios))) {
                    meses_trascurridos:=n_meses,
                    tasa_interes,
                    liquidacion,
-                   interes)
+                   interes) %>%
+    mutate( fecha_liquidacion = as.character( fecha_liquidacion ) )
   
   n <- nrow(aux)
   
@@ -98,7 +109,7 @@ for (j in c(1:nrow(beneficiarios))) {
          include.rownames = FALSE,
          format.args = list( decimal.mark = ',', big.mark = '.' ),
          only.contents = TRUE,
-         hline.after = nrow(aux) - 1,
+         hline.after = c( nrow(aux) - 1, nrow(aux) ),
          sanitize.text.function = identity )
   
 }
@@ -106,7 +117,7 @@ for (j in c(1:nrow(beneficiarios))) {
 
 #3. Tabla resultados del calculo de la reserva matemática-------------------------------------------
 
-for (j in c(1:nrow(beneficiarios))) {
+for (j in c(1:nrow(reserva_matematica))) {
   
   aux <-  reserva_matematica %>%
     filter( id == j) %>%
@@ -116,6 +127,9 @@ for (j in c(1:nrow(beneficiarios))) {
                    fecha_derecho_ivm,
                    x:=edad,
                    edad_derecho_ivm,
+                   renta_concedida,
+                   renta_ce,
+                   renta_ivm,
                    n,
                    a_x_n,
                    res_mat_temporal,
@@ -141,45 +155,61 @@ for (j in c(1:nrow(beneficiarios))) {
                                          decimal.mark = ',', format = 'f' ),
             a_x   = format( a_x,
                                          digits = 2, nsmall = 2, big.mark = '.',
-                                         decimal.mark = ',', format = 'f' )
-            
+                                         decimal.mark = ',', format = 'f' ),
+            renta_ivm = format( renta_ivm,
+                                  digits = 2, nsmall = 2, big.mark = '.',
+                                  decimal.mark = ',', format = 'f' ),
+            renta_concedida = format( renta_concedida,
+                                  digits = 2, nsmall = 2, big.mark = '.',
+                                  decimal.mark = ',', format = 'f' ),
+            renta_ce = format( renta_ce,
+                                      digits = 2, nsmall = 2, big.mark = '.',
+                                      decimal.mark = ',', format = 'f' )
             ) 
   
   aux[c(1:ncol(aux))] <- lapply(aux[c(1:ncol(aux))], function(x) as.character(x))
   
   aux <- aux %>%
     pivot_longer(!c(id) ,names_to = "variable", values_to = "valor") %>%
+    mutate( variable = c('Cédula ciudadanía',
+                         'F1 Renta',
+                         'Fecha de derecho IVM',
+                         '$x$',
+                         'Edad derecho IVM',
+                         'Renta concedida al corte (USD)',
+                         'Renta cemento al 2022 (USD)',
+                         'Renta IVM al 2022 (USD)',
+                         '$n$',
+                         '$\\actsymb{\\ddot{a}}{\\nthtop{}{x}:\\angln}$',
+                         'Renta matemática temporal (USD)',
+                         '$k$',
+                         '$k / \\ddot{a}_x$',
+                         'Renta matemática diferida (USD)',
+                         '$\\ddot{a}_x$',
+                         'Reserva matemática (USD)') ) %>%
     dplyr::select(-id) %>%
     filter( !is.na( valor )) %>%
     filter(valor != 'NA')
-  
-  write.table(aux, file = paste0( parametros$resultado_tablas, 'iess_resultado_individual_',j,'.tex' ),
-              sep = ",",
-              col.names = FALSE,
-              row.names = FALSE,
-              quote = FALSE,
-              qmethod = "double")
-  
   
   aux_xtab <- xtable( aux, digits = c( 0, rep(0,2) ) )
   
   aux_xtab <- tildes_a_latex(aux_xtab)
   
-  ifelse( nrow(aux)==12,
-          a <- c(paste(" \n \\multicolumn{2}{c}{\\textbf{Renta temporal}} \\\\ \n \\hline \n"), 
+  ifelse( nrow(aux)==15,
+          a <- c(paste(" \n \\hline \\multicolumn{2}{c}{\\textbf{Renta temporal}} \\\\ \n "), 
                  paste(" \n \\hline \\multicolumn{2}{c}{\\textbf{Renta diferida vitalicia}} \\\\ \n"),
                  paste(" \n \\hline \\multicolumn{2}{c}{\\textbf{Reserva Total}} \\\\ \n") ),
-          a <- c(paste(" \n \\hline \\multicolumn{2}{c}{\\textbf{Renta Vitalicia}} \\\\ \n") ) )
+          a <- c(paste(" \n \\hline \\multicolumn{2}{c}{\\textbf{Renta Vitalicia}} \\\\ \n \\hline \n") ) )
   
   print( aux_xtab,
-         file = paste0( parametros$resultado_tablas, 'iess_resultado_individual_', j, '.tex' ),
+         file = paste0( parametros$resultado_tablas, 'iess_reserva_individual_', j, '.tex' ),
          type = 'latex', 
          include.colnames = FALSE, include.rownames = FALSE, 
          format.args = list( decimal.mark = ',', big.mark = '.' ), 
          only.contents = TRUE, 
-         hline.after = ifelse( nrow(aux)==12, c(5,8,11), c(6) ),
+         hline.after = if( nrow(aux)==15 )  c(8,10,11,13,14,nrow(aux)) else c(9,nrow(aux)) ,
          sanitize.text.function = identity,
-         add.to.row = list( pos = if( nrow(aux)==12 ) list(5,8,11) else list(6),
+         add.to.row = list( pos = if( nrow(aux)==15 ) list(8,11,14) else list(8),
                  command = a
            ) )
   

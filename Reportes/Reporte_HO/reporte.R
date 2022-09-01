@@ -29,15 +29,13 @@ REP_bib_lib <- 'bibliografia_libros.bib'
 REP_bib_art <- 'bibliografia_articulos.bib'
 REP_bib_ley <- 'bibliografia_leyes.bib'
 
-REP_tit <- 'Estudio para dar cumplimento a las disposiciones judiciales emitidas dentro del juicio No.
-09332-2019-09723 devenida del caso N°.0013-16-IS que refiere a la Acción de Incumplimiento de la sentencia constitucional de la Resolución N°.
-0916-07-RA del 15-12-2010, seguida por la Asociación Jubilados de la Cemento Nacional, en contra de la empresa HOLCIM S.A.'
+REP_tit <- 'Reserva matemática para los pensionistas de la jubilación de la Industria del Cemento'
 REP_seg <- switch( parametros$seguro,
                    'CE' = 'Jubilación Especial de los Trabajadores de la Industria del Cemento') 
 
 paste( 'Seguro', parametros$seguro )
 REP_fec_fin <- format( parametros$fec_fin, '%Y-%m-%d' )
-REP_fec_val <- format( ymd( '2020-10-19' ), '%Y-%m-%d' )
+REP_fec_val <- format( ymd( '2022-08-31' ), '%Y-%m-%d' )
 REP_watermark <- paste0( 'Borrador ', parametros$fec_eje, ' ', format( Sys.time(), '%H:%M:%S' ) )
 REP_version <- digest( paste0( 'IESSDAIE', format( Sys.time(), '%Y%m%d%H' ) ), algo = 'sha256', file = FALSE )
 

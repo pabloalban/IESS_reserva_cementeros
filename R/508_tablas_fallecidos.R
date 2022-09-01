@@ -18,14 +18,15 @@ for (j in fallecidos$id ) {
     dplyr::select( -id ) %>%
     mutate( f1_renta = as.character(f1_renta),
             fecha_derecho_ivm  = as.character(fecha_derecho_ivm ),
-            periodo = as.character( periodo ) )
+            periodo = as.character( periodo ) ) %>%
+    dplyr::select(-cedula, -fecha_defuncion )
   
   n <- nrow(aux)
   
-  aux <- rbind((aux), c("Total", NA, NA, NA, NA, as.character(colSums(aux[,6:ncol(aux)]) ) ) )
-  aux[c(6:ncol(aux))] <- lapply(aux[c(6:ncol(aux))], function(x) as.numeric(x))
+  aux <- rbind((aux), c("Total", NA, NA, NA, as.character(colSums(aux[,5:ncol(aux)]) ) ) )
+  aux[c(4:ncol(aux))] <- lapply(aux[c(4:ncol(aux))], function(x) as.numeric(x))
   
-  aux_xtab <- xtable( aux, digits = c( 0, rep(0, 5), rep(2, 6)  ) )
+  aux_xtab <- xtable( aux, digits = c( 0, rep(0, 3), rep(2,7)  ) )
   
   print( aux_xtab, 
          file = paste0( parametros$resultado_tablas, 'iess_liquidacion_',j,'.tex' ),
@@ -33,7 +34,7 @@ for (j in fallecidos$id ) {
          include.colnames = FALSE, include.rownames = FALSE,
          format.args = list( decimal.mark = ',', big.mark = '.' ),
          only.contents = TRUE,
-         hline.after = c( n ),
+         hline.after = c( n, n+1 ),
          sanitize.text.function = identity)
 }
 
@@ -41,7 +42,7 @@ for (j in fallecidos$id ) {
 message( '\tGenerando tablas de resultados individuales' )
 #2. Tabla resumen resultados total------------------------------------------------------------------
 for (j in fallecidos$id) {
-  
+
   aux <- tab_resultado %>%
     filter( id == j) %>%
     dplyr::select( id,
@@ -77,9 +78,19 @@ for (j in fallecidos$id) {
   
   aux <- aux %>%
     pivot_longer(!c(id) ,names_to = "variable", values_to = "valor") %>%
-    dplyr::select(-id)
+    dplyr::select(-id) %>%
+    mutate( variable = c('Cédula de ciudadanía',
+                         'Líquidación pensiones desde fecha de derecho',
+                         'Intereses de valores cancelados por IVM',
+                         'Reserva matemática',
+                         'Beneficios de montepío',
+                         'Gastos administrativos',
+                         'Total a transferir'
+    ) )
   
   aux_xtab <- xtable( aux, digits = c( 0, 0, 0 ) )
+  
+  aux_xtab <- tildes_a_latex(aux_xtab)
   
   print( aux_xtab, 
          file = paste0( parametros$resultado_tablas, 'iess_resultado_individual_',j,'.tex' ),
@@ -97,7 +108,7 @@ for (j in fallecidos$id) {
 interes <- interes %>%
   mutate( pago = if_else( pago == 'liquidacion 1', 'Primer pago por pensiones pendientes', 'Segundo pago por pensiones pendientes' ) )
 
-for (j in fallecidos$id) {
+for (j in c(fallecidos$id)) {
   
   aux <- interes %>%
     filter( id == j) %>%
@@ -108,7 +119,8 @@ for (j in fallecidos$id) {
                    meses_trascurridos:=n_meses,
                    tasa_interes,
                    liquidacion,
-                   interes)
+                   interes) %>%
+    mutate( fecha_liquidacion = as.character( fecha_liquidacion ) )
   
   n <- nrow(aux)
   
@@ -125,7 +137,7 @@ for (j in fallecidos$id) {
          include.rownames = FALSE,
          format.args = list( decimal.mark = ',', big.mark = '.' ),
          only.contents = TRUE,
-         hline.after = nrow(aux) - 1,
+         hline.after = c( nrow(aux) - 1, nrow(aux) ),
          sanitize.text.function = identity )
   
 }

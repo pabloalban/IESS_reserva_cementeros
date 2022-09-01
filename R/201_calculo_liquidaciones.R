@@ -16,6 +16,7 @@ liquidacion <- actualizacion_pensiones %>%
                 sbu,
                 renta_concedida,
                 fecha_derecho_ivm,
+                pension_max,
                 coef) %>%
   mutate( anio_f1 = year( f1_renta ),
           mes_f1 =month( f1_renta ),
@@ -40,6 +41,7 @@ liquidacion <- actualizacion_pensiones %>%
                 cedula,
                 f1_renta,
                 fecha_derecho_ivm,
+                pension_max,
                 renta_concedida,
                 decima_tercera,
                 decima_cuarta,

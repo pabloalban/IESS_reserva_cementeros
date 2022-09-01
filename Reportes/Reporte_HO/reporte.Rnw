@@ -40,8 +40,8 @@
 <<cap01, child='01_cobertura.Rnw'>>=
 @
 
-<<cap02, child='02_contenido.Rnw'>>=
-@
+%<<cap02, child='02_contenido.Rnw'>>=
+%@
 
 %---------------------------------------------------------------------------------------------------
 % Cuerpo del estudio
@@ -50,17 +50,17 @@
 %<<cap03, child='03_resumen_ejecutivo.Rnw'>>=
 %@
 
-<<cap04, child='04_antecedentes.Rnw'>>=
-@
+%<<cap04, child='04_antecedentes.Rnw'>>=
+%@
 
-<<cap05, child='05_base_legal.Rnw'>>=
-@
+%<<cap05, child='05_base_legal.Rnw'>>=
+%@
 
-<<cap06, child='07_demografia.Rnw'>>=
-@
+%<<cap06, child='07_demografia.Rnw'>>=
+%@
 
-<<cap08, child='08_metodologia.Rnw'>>=
-@
+%<<cap08, child='08_metodologia.Rnw'>>=
+%@
 
 %<<cap09, child='09_hipotesis.Rnw'>>=
 %@
@@ -71,11 +71,11 @@
 <<cap11, child='11_liquidacion.Rnw'>>=
 @
 
-<<cap13, child='13_conclusion.Rnw'>>=
-@
+%<<cap13, child='13_conclusion.Rnw'>>=
+%@
 
-<<cap12, child='13_sensibilidad.Rnw'>>=
- @
+%<<cap12, child='13_sensibilidad.Rnw'>>=
+%@
 %
 %<<cap14, child='14_opinion_actuarial.Rnw'>>=
 %@

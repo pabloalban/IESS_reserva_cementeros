@@ -39,6 +39,8 @@ aux_1 <- reserva_matematica %>%
                  reserva_matematica,
                  montepio)
 
+aux_1 <- aux_1 %>%
+  filter( !is.na(nombre))
 
 #2. Tabla resumen de intereses----------------------------------------------------------------------
 
@@ -49,6 +51,7 @@ aux_2 <- interes %>%
   clean_names() %>%
   group_by( cedula ) %>%
   mutate( liquidacion = liquidacion_1+liquidacion_2 ) %>%
+  mutate( interes  = sum( interes , na.rm =  TRUE )) %>%
   ungroup() %>%
   distinct( cedula, .keep_all = TRUE ) %>%
   dplyr::select( id,
@@ -91,11 +94,12 @@ aux_5 <- liquidacion %>%
   dplyr::select( id, cedula,  liquidacion:=total_a_pagar )
 
 
+
 # Total---------------------------------------------------------------------------------------------
 tab_resultado <- left_join( aux_1,
                             rbind(aux_2,aux_4),
                             by = c('id','cedula') ) %>%
-  left_join(., rbind(aux_3,aux_5), by = c('id','cedula') )
+  left_join(., rbind(aux_3 %>% filter(id %in% c(1:46)),aux_5), by = c('id','cedula') )
 #5. Gatos administrativos---------------------------------------------------------------------------
 
 tab_resultado <- tab_resultado %>%
