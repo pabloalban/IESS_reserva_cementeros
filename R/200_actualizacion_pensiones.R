@@ -22,7 +22,7 @@ pensiones <- rbind(beneficiarios,
   mutate( anio_f1 = year(f1_renta)) %>%
   group_by( cedula ) %>%
   mutate( pension_concedida = max(ultimo_sueldo, ric_ivm)) %>%
-ungroup() %>%
+  ungroup() %>%
   mutate( coef = ric_ivm / pension_concedida ) %>%
   dplyr::select( id,
                  cedula,
@@ -38,9 +38,9 @@ ungroup() %>%
               edad,
               n,
               k) %>%
-  mutate( n = 2022 - anio_f1 + 1) %>%
+  mutate( i = 2022 - anio_f1 + 1) %>%
   mutate( imposiciones = as.integer( imposiciones ) ) %>%
-  slice(rep(1:n(),n)) %>%
+  slice(rep(1:n(),i)) %>%
   group_by(cedula) %>%
   mutate(contador = 1:n()) %>%
   mutate(anio = contador + anio_f1 - 1) %>%
@@ -58,7 +58,8 @@ actualizacion_pensiones <- pensiones %>%
   ungroup() %>%
   group_by( cedula, contador ) %>%
   mutate( renta_concedida = max( min( renta_calculada, pension_max), pension_min) ) %>% 
-  ungroup()
+  ungroup() %>%
+  dplyr::select(-i)
 
   
 #Guardar en un RData--------------------------------------------------------------------------------

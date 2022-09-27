@@ -28,8 +28,6 @@ derecho_ivm <- actualizacion_pensiones %>%
           renta_ce = (1 - coef) * renta_concedida ) %>%
   mutate( total_a_pagar = renta_concedida ) %>%
   mutate( periodo = as.Date( paste0(2022, '/', 08, '/31'), '%Y/%m/%d' ) ) %>%
-  mutate( renta_anual = renta_ce * 13 + 425 ) %>%
-  mutate( renta_anual = if_else( renta_ce == 0, 0, renta_anual ) ) %>%
   left_join(., tabla_mortalidad, by=c('edad','g')) %>%
   mutate( reserva_matematica = a_x * renta_ce * 13 )
 
@@ -54,37 +52,34 @@ sin_derecho_ivm <- actualizacion_pensiones %>%
           renta_ce = (1 - coef) * renta_concedida ) %>%
   mutate( total_a_pagar = renta_concedida ) %>%
   mutate( periodo = as.Date( paste0(2022, '/', 08, '/31'), '%Y/%m/%d' ) ) %>%
-  mutate( renta_anual = renta_ce * 13 + 425 ) %>%
-  mutate( renta_anual = if_else( renta_ce == 0, 0, renta_anual ) ) %>%
-  mutate( x_mas_n = edad + n ) %>%
-  mutate( x_mas_k = edad + k ) %>%
+  mutate( x_mas_k = edad + k + 1  ) %>%
   left_join( ., tabla_mortalidad, by = c('g', 'edad') )
 
 aux_1 <- tabla_mortalidad %>%
-  dplyr::select( edad, g, N_x_mas_n:=N_x )
+  dplyr::select( edad, g, N_n:=N_x )
 
 aux_2 <- tabla_mortalidad %>%
-  dplyr::select( edad, g, N_x_mas_k:=N_x )
+  dplyr::select( edad, g, N_x_mas_k:=N_x, D_x_mas_k := D_x )
 
 sin_derecho_ivm <- sin_derecho_ivm %>%
-  left_join(., aux_1, by = c('g'='g', 'x_mas_n'='edad')) %>%
+  left_join(., aux_1, by = c('g'='g', 'n'='edad')) %>%
   left_join(., aux_2, by = c('g'='g', 'x_mas_k'='edad'))
 
 #Renta anticipada y temporal------------------------------------------------------------------------
 
 sin_derecho_ivm <- sin_derecho_ivm %>%
-  mutate( a_x_n = ( N_x - N_x_mas_n )/ D_x )
+  mutate( a_x_n = ( N_x - N_n )/ D_x )
 
 #Renta anticipada, diferida y vitalicia-------------------------------------------------------------
 
 sin_derecho_ivm <- sin_derecho_ivm %>%
-  mutate( k_a_x = N_x_mas_k / D_x )
+  mutate( a_n_w = N_x_mas_k / D_x_mas_k )
 
 #Reserva matemática---------------------------------------------------------------------------------
 
 sin_derecho_ivm <- sin_derecho_ivm %>%
   mutate( res_mat_temporal =  a_x_n * ( 13 * renta_concedida + 425 ) )  %>%
-  mutate( res_mat_diferida = k_a_x * ( (1 - coef) * 13 * renta_concedida ) ) %>%
+  mutate( res_mat_diferida = a_n_w * ( (1 - coef) * 13 * renta_concedida ) ) %>%
   mutate( reserva_matematica = res_mat_temporal + res_mat_diferida )
 
 #Pensionistas fallecidos----------------------------------------------------------------------------
@@ -107,14 +102,14 @@ reserva_fallecidos <- fallecidos %>%
 
 #Concatenar en un RData-----------------------------------------------------------------------------
 reserva_matematica <- rbind( derecho_ivm %>%
-                               mutate( N_x_mas_n = NA,
+                               mutate( N_n = NA,
                                        N_x_mas_k = NA,
                                        k = NA,
                                        n = NA,
                                        res_mat_temporal = NA,
                                        res_mat_diferida = NA,
                                        a_x_n = NA,
-                                       k_a_x = NA
+                                       a_n_w = NA
                                        ) %>%
                                dplyr::select( id,
                                               cedula,
@@ -126,16 +121,13 @@ reserva_matematica <- rbind( derecho_ivm %>%
                                               renta_ivm,
                                               renta_ce,
                                               renta_concedida,
-                                              renta_anual,
-                                              a_x,
-                                              N_x_mas_n,
-                                              N_x_mas_k,
                                               k,
-                                              n,
                                               a_x_n,
+                                              n,
                                               res_mat_temporal,
-                                              k_a_x,
+                                              a_n_w,
                                               res_mat_diferida,
+                                              a_x,
                                               reserva_matematica ),
                              sin_derecho_ivm %>%
                                mutate( a_x = NA ) %>%
@@ -149,9 +141,8 @@ reserva_matematica <- rbind( derecho_ivm %>%
                                               renta_ivm,
                                               renta_ce,
                                               renta_concedida,
-                                              renta_anual,
                                               a_x,
-                                              N_x_mas_n,
+                                              N_n,
                                               N_x_mas_k,
                                               k,
                                               n,
@@ -182,9 +173,8 @@ reserva_matematica <- rbind( reserva_matematica, reserva_fallecidos %>%
                                               renta_ivm,
                                               renta_ce,
                                               renta_concedida,
-                                              renta_anual,
                                               a_x,
-                                              N_x_mas_n,
+                                              N_n,
                                               N_x_mas_k,
                                               k,
                                               n,
