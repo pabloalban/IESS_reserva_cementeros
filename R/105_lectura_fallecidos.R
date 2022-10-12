@@ -32,7 +32,7 @@ beneficiarios <- beneficiarios %>%
   mutate( k =  n - edad ) %>%
   mutate( k = ifelse( k <= 0, NA, k ) ) %>%
   mutate( anios_imposiciones = as.integer(anios_imposiciones) ) %>%
-  filter( !is.na(fecha_defuncion)) %>%
+  #filter( !is.na(fecha_defuncion)) %>%
   mutate( fecha_defuncion = as.Date(fecha_defuncion, "%Y-%m-%d"))
 
 fallecidos <- beneficiarios

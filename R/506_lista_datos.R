@@ -14,18 +14,19 @@ message( '\tGenerando fechas de cese de beneficiarios de liquidaciones' )
 #1. Tabla resumen recaudación total-----------------------------------------------------------------
 for (j in c(1:nrow(beneficiarios))) {
   
-  aux_1 <- actualizacion_pensiones %>%
-    filter( anio == anio_f1 ) %>%
-    dplyr::select(cedula, pension_concedida, coef)
-
   aux <- beneficiarios %>%
     filter( id == j) %>%
+    mutate( ric_ce = ric - ric_ivm,
+            coef = ric_ivm / ric ) %>%
     dplyr::select( cedula,
                    sexo:=g,
                    fecha_de_nacimiento,
                    edad,
                    anios_imposiciones,
                    ultimo_sueldo,
+                   ric,
+                   ric_ivm,
+                   ric_ce,
                    f1_renta,
                    fecha_derecho_ivm,
                    edad_derecho_ivm,
@@ -33,9 +34,6 @@ for (j in c(1:nrow(beneficiarios))) {
                    fecha_liquidacion_1,
                    liquidacion_2,
                    fecha_liquidacion_2) %>%
-    left_join(., aux_1, by = 'cedula') %>%
-    mutate( ric_ce = (1-coef) * pension_concedida,
-            ric_ivm = coef * pension_concedida ) %>%
     mutate( sexo = if_else( sexo == 'M', 'Masculino', 'Femenino'),
             ultimo_sueldo = format( ultimo_sueldo,
                                   digits = 2, nsmall = 2, big.mark = '.',
@@ -52,29 +50,12 @@ for (j in c(1:nrow(beneficiarios))) {
             ric_ce = format( ric_ce,
                                     digits = 2, nsmall = 2, big.mark = '.',
                                     decimal.mark = ',', format = 'f' ),
-            pension_concedida = format( pension_concedida,
+            ric = format( ric,
                                        digits = 2, nsmall = 2, big.mark = '.',
                                        decimal.mark = ',', format = 'f' )
             
             
-            ) %>%
-    dplyr::select( cedula,
-                   sexo,
-                   fecha_de_nacimiento,
-                   edad,
-                   anios_imposiciones,
-                   ultimo_sueldo,
-                   pension_concedida,
-                   ric_ivm,
-                   ric_ce,
-                   f1_renta,
-                   fecha_derecho_ivm,
-                   edad_derecho_ivm,
-                   liquidacion_1,
-                   fecha_liquidacion_1,
-                   liquidacion_2,
-                   fecha_liquidacion_2 ) 
-  
+            )
   
   aux[c(1:ncol(aux))] <- lapply(aux[c(1:ncol(aux))], function(x) as.character(x))
   
@@ -87,8 +68,8 @@ for (j in c(1:nrow(beneficiarios))) {
                          'Años de imposiciones',
                          'Último sueldo cemento (USD)',
                          'Pensión concedida inicial(USD)',
-                         'Renta inicial de IVM (USD)',
-                         'Renta inicial del cemento (USD)',
+                         'Renta ficticia de IVM (USD)',
+                         'Renta ficticia del cemento (USD)',
                          'Fecha F1 Renta',
                          'Fecha derecho IVM',
                          'Edad derecho IVM',
@@ -120,18 +101,19 @@ for (j in c(1:nrow(beneficiarios))) {
 
 for (j in c(fallecidos$id)) {
   
-  aux_1 <- actualizacion_pensiones %>%
-    filter( anio == anio_f1 ) %>%
-    dplyr::select(cedula, pension_concedida, coef)
-  
   aux <- fallecidos %>%
     filter( id == j) %>%
+    mutate( ric_ce = ric - ric_ivm,
+            coef = ric_ivm / ric ) %>%
     dplyr::select( cedula,
                    sexo:=g,
                    fecha_de_nacimiento,
                    edad,
                    anios_imposiciones,
                    ultimo_sueldo,
+                   ric,
+                   ric_ivm,
+                   ric_ce,
                    f1_renta,
                    fecha_derecho_ivm,
                    edad_derecho_ivm,
@@ -139,9 +121,6 @@ for (j in c(fallecidos$id)) {
                    fecha_liquidacion_1,
                    liquidacion_2,
                    fecha_liquidacion_2) %>%
-    left_join(., aux_1, by = 'cedula') %>%
-    mutate( ric_ce = (1-coef) * pension_concedida,
-            ric_ivm = coef * pension_concedida ) %>%
     mutate( sexo = if_else( sexo == 'M', 'Masculino', 'Femenino'),
             ultimo_sueldo = format( ultimo_sueldo,
                                     digits = 2, nsmall = 2, big.mark = '.',
@@ -158,29 +137,12 @@ for (j in c(fallecidos$id)) {
             ric_ce = format( ric_ce,
                              digits = 2, nsmall = 2, big.mark = '.',
                              decimal.mark = ',', format = 'f' ),
-            pension_concedida = format( pension_concedida,
-                                        digits = 2, nsmall = 2, big.mark = '.',
-                                        decimal.mark = ',', format = 'f' )
+            ric = format( ric,
+                          digits = 2, nsmall = 2, big.mark = '.',
+                          decimal.mark = ',', format = 'f' )
             
             
-    ) %>%
-    dplyr::select( cedula,
-                   sexo,
-                   fecha_de_nacimiento,
-                   edad,
-                   anios_imposiciones,
-                   ultimo_sueldo,
-                   pension_concedida,
-                   ric_ivm,
-                   ric_ce,
-                   f1_renta,
-                   fecha_derecho_ivm,
-                   edad_derecho_ivm,
-                   liquidacion_1,
-                   fecha_liquidacion_1,
-                   liquidacion_2,
-                   fecha_liquidacion_2 ) 
-  
+    )
   
   aux[c(1:ncol(aux))] <- lapply(aux[c(1:ncol(aux))], function(x) as.character(x))
   
@@ -193,8 +155,8 @@ for (j in c(fallecidos$id)) {
                          'Años de imposiciones',
                          'Último sueldo cemento (USD)',
                          'Pensión concedida inicial(USD)',
-                         'Renta inicial de IVM (USD)',
-                         'Renta inicial del cemento (USD)',
+                         'Renta ficticia de IVM (USD)',
+                         'Renta ficticia del cemento (USD)',
                          'Fecha F1 Renta',
                          'Fecha derecho IVM',
                          'Edad derecho IVM',

@@ -6,6 +6,8 @@ load(paste0( parametros$RData, 'IESS_sbu.RData'))
 load(paste0( parametros$RData, 'IESS_pensiones_max_min.RData'))
 load(paste0( parametros$RData, 'IESS_crecimiento_pensiones.RData'))
 load(paste0( parametros$RData, 'IESS_fallecidos.RData'))
+load(paste0( parametros$RData, 'IESS_nomina_concesiones.RData'))
+
 
 message("\tEstableciendo pensiones máximas y mínimas")
 #Límites de las pensiones---------------------------------------------------------------------------
@@ -61,7 +63,20 @@ actualizacion_pensiones <- pensiones %>%
   ungroup() %>%
   dplyr::select(-i)
 
-  
+# Pensiones de nomina-------------------------------------------------------------------------------
+actualizacion_pensiones <- actualizacion_pensiones %>%
+  dplyr::select(-renta_concedida) %>%
+  filter( anio == '2022')
+
+aux <- nomina %>%
+  filter( periodo == as.Date( "01/08/2022", "%d/%m/%Y" ) ) %>%
+  dplyr::select(cedula, renta_concedida:=pension_aumentos)
+
+
+actualizacion_pensiones <- actualizacion_pensiones %>%
+  left_join(., aux, by = 'cedula')
+
+
 #Guardar en un RData--------------------------------------------------------------------------------
 message( '\tGuardando pensiones de los jubilados' )
 

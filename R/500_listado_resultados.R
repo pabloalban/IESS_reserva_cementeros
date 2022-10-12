@@ -14,7 +14,8 @@ message( '\tGenerando tabla de resultados' )
 aux <- tab_resultado %>%
   dplyr::select( -nombre,
                  -res_mat_temporal,
-                 -res_mat_diferida )
+                 -res_mat_diferida,
+                 -interes)
 n <- nrow(aux)
 
 aux <- rbind((aux), c("Total", NA, NA, NA, NA, as.character(colSums(aux[,6:ncol(aux)]) ) ) )
@@ -22,8 +23,7 @@ aux[c(6:ncol(aux))] <- lapply(aux[c(6:ncol(aux))], function(x) as.numeric(x))
 
 aux <- aux %>%
   dplyr::select(-id) %>%
-  mutate( f1_renta = as.character( f1_renta ),
-          fecha_derecho_ivm  = as.character( fecha_derecho_ivm  ) )
+  mutate( fecha_derecho_ivm  = as.character( fecha_derecho_ivm  ) )
 
 aux_xtab <- xtable( aux, digits = c( 0, rep(0, 5), rep(2,7) ) )
   
