@@ -3,6 +3,7 @@ message( '\tExporta a excel' )
 
 # Carga de datos -----------------------------------------------------------------------------------
 load(paste0(parametros$RData, "IESS_tab_resultado.RData"))
+load(paste0(parametros$RData, "IESS_presupuesto_2023.RData"))
 
 #Cargar función tíldes a latex----------------------------------------------------------------------
 source( 'R/503_tildes_a_latex.R', encoding = 'UTF-8', echo = FALSE )
@@ -17,6 +18,15 @@ write.xlsx(tab_resultado,
            col.names = TRUE,
            row.names = TRUE, 
            append = FALSE)
+
+write.xlsx(reserva_matematica,
+           file = paste0( parametros$resultado_seguro , 'IESS_presupuesto_2023.xlsx' ),
+           sheetName = "presupuesto", 
+           col.names = TRUE,
+           row.names = TRUE, 
+           append = FALSE)
+
+
 
 #---------------------------------------------------------------------------------------------------
 message( paste( rep('-', 100 ), collapse = '' ) )
