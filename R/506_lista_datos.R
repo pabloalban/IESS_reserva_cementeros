@@ -2,10 +2,11 @@ message( paste( rep('-', 100 ), collapse = '' ) )
 message( '\tLectura de la proyección de precios' )
 
 # Carga de datos -----------------------------------------------------------------------------------
-load(paste0(parametros$RData, "IESS_beneficiarios.RData"))
-load(paste0(parametros$RData, "IESS_liquidacion.RData"))
-load(paste0(parametros$RData, "IESS_actualizacion_pensiones.RData"))
-load(paste0( parametros$RData, 'IESS_fallecidos.RData'))
+load (paste0( parametros$RData, "IESS_beneficiarios.RData" ) )
+load( paste0( parametros$RData, "IESS_liquidacion.RData" ) )
+load( paste0( parametros$RData, "IESS_actualizacion_pensiones.RData" ) )
+load( paste0( parametros$RData, 'IESS_fallecidos.RData' ) )
+load( paste0( parametros$RData, 'IESS_nomina_concesiones.RData' ) )
 
 #Cargar función tíldes a latex----------------------------------------------------------------------
 source( 'R/503_tildes_a_latex.R', encoding = 'UTF-8', echo = FALSE )
@@ -182,6 +183,95 @@ for (j in c(fallecidos$id)) {
          sanitize.text.function = identity)
   
 }
+
+
+aux <- nomina_ivm_v2 %>% 
+  group_by( cedula ) %>%  
+  filter( periodo == max( periodo, na.rm = TRUE ) ) %>% 
+  ungroup( ) %>% 
+  distinct( ., cedula, .keep_all = TRUE ) %>% 
+  dplyr::select( cedula,
+                 pension_aumentos := valor_pension_aumentos  )
+
+beneficiarios_v2 <- beneficiarios_v2 %>% 
+  left_join( ., aux, by = 'cedula' )
+
+for (j in c( beneficiarios_v2$id ) ) {
+  
+  aux <- beneficiarios_v2 %>%
+    filter( id == j) %>%
+    mutate( ric_ce = ric - pension_aumentos,
+            coef = ric_ivm / ric ) %>%
+    mutate( ric_ce = if_else( ric_ce < 0,
+                              0,
+                              ric_ce ),
+            coef = if_else( coef > 1,
+                            1, 
+                            coef ) ) %>% 
+    dplyr::select( cedula,
+                   sexo:=g,
+                   fecha_de_nacimiento,
+                   edad,
+                   anios_imposiciones,
+                   ultimo_sueldo,
+                   ric,
+                   pension_aumentos,
+                   ric_ce,
+                   f1_renta,
+                   fecha_derecho_ivm,
+                   edad_derecho_ivm ) %>%
+    mutate( sexo = if_else( sexo == 'M', 'Masculino', 'Femenino'),
+            ultimo_sueldo = format( ultimo_sueldo,
+                                    digits = 2, nsmall = 2, big.mark = '.',
+                                    decimal.mark = ',', format = 'f' ),
+            pension_aumentos = format( pension_aumentos,
+                              digits = 2, nsmall = 2, big.mark = '.',
+                              decimal.mark = ',', format = 'f' ),
+            ric_ce = format( ric_ce,
+                             digits = 2, nsmall = 2, big.mark = '.',
+                             decimal.mark = ',', format = 'f' ),
+            ric = format( ric,
+                          digits = 2, nsmall = 2, big.mark = '.',
+                          decimal.mark = ',', format = 'f' )
+            
+            
+    )
+  
+  aux[c(1:ncol(aux))] <- lapply(aux[c(1:ncol(aux))], function(x) as.character(x))
+  
+  aux <- aux %>%
+    pivot_longer(!cedula,names_to = "variable", values_to = "valor") %>%
+    dplyr::select(-cedula) %>%
+    mutate( variable = c('Sexo',
+                         'Fecha nacimiento',
+                         'Edad actual',
+                         'Años de imposiciones',
+                         'Último sueldo cemento (USD)',
+                         'Pensión inicial concedida (USD)',
+                         'Parte de la renta del IVM (USD)',
+                         'Parte de la renta del cemento (USD)',
+                         'Fecha F1 Renta',
+                         'Fecha derecho IVM',
+                         'Edad derecho IVM'
+    ) )
+  
+  aux_xtab <- xtable( aux, digits = c( 0, 0, 0 ) )
+  
+  aux_xtab <- tildes_a_latex(aux_xtab)
+  
+  print( aux_xtab, 
+         file = paste0( parametros$resultado_tablas, 'iess_datos_id_',j,'.tex' ),
+         type = 'latex',
+         include.colnames = FALSE, 
+         include.rownames = FALSE,
+         format.args = list( decimal.mark = ',', big.mark = '.' ),
+         only.contents = TRUE,
+         hline.after = nrow(aux),
+         sanitize.text.function = identity)
+  
+}
+
+
 #---------------------------------------------------------------------------------------------------
 message( paste( rep('-', 100 ), collapse = '' ) )
 rm( list = ls()[ !( ls() %in% c( 'parametros' ) ) ] )

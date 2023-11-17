@@ -28,7 +28,6 @@ for (j in c(1:nrow(beneficiarios))) {
   
 }
 
-
 for (j in c(fallecidos$id)) {
   
   aux <- fallecidos %>%
@@ -46,6 +45,27 @@ for (j in c(fallecidos$id)) {
               qmethod = "double")
   
 }
+
+for (j in c( beneficiarios_v2$id ) ) {
+  
+  aux <- beneficiarios_v2 %>%
+    filter( id == j) %>%
+    select( -id ) %>%
+    mutate( f1_renta = as.character(f1_renta),
+            fecha_derecho_ivm  = as.character(fecha_derecho_ivm ) ) %>%
+    dplyr::select( cedula )
+  
+  aux$cedula <- paste0( aux$cedula, ',' )
+  
+  write.table(aux, file = paste0( parametros$resultado_tablas, 'iess_cedula_',j,'.tex' ),
+              sep = ",",
+              col.names = FALSE,
+              row.names = FALSE,
+              quote = FALSE,
+              qmethod = "double")
+  
+}
+
 #---------------------------------------------------------------------------------------------------
 message( paste( rep('-', 100 ), collapse = '' ) )
 rm( list = ls()[ !( ls() %in% c( 'parametros' ) ) ] )

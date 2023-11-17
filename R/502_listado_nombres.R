@@ -45,6 +45,28 @@ for (j in c(unique(fallecidos$id))) {
               qmethod = "double")
   
 }
+
+
+
+for (j in c( beneficiarios_v2$id ) ) {
+  
+  aux <- beneficiarios_v2 %>%
+    filter( id == j) %>%
+    dplyr::select( nombre) 
+  
+  aux <- data.frame(lapply(aux, function(x) { if(is.character(x)) gsub("Ñ", "$\\tilde{\\text{N}}$", x, fixed = TRUE) else x }))
+  
+  aux$nombre <- paste0( aux$nombre, ',')
+  
+  write.table(aux, file = paste0( parametros$resultado_tablas, 'iess_nombre_',j,'.tex' ),
+              sep = ",",
+              col.names = FALSE,
+              row.names = FALSE,
+              quote = FALSE,
+              qmethod = "double")
+  
+}
+
 #---------------------------------------------------------------------------------------------------
 message( paste( rep('-', 100 ), collapse = '' ) )
 rm( list = ls()[ !( ls() %in% c( 'parametros' ) ) ] )

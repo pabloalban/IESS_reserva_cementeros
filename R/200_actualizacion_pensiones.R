@@ -8,7 +8,6 @@ load(paste0( parametros$RData, 'IESS_crecimiento_pensiones.RData'))
 load(paste0( parametros$RData, 'IESS_fallecidos.RData'))
 load(paste0( parametros$RData, 'IESS_nomina_concesiones.RData'))
 
-
 message("\tEstableciendo pensiones máximas y mínimas")
 #Límites de las pensiones---------------------------------------------------------------------------
 
@@ -76,6 +75,14 @@ aux <- nomina %>%
 actualizacion_pensiones <- actualizacion_pensiones %>%
   left_join(., aux, by = 'cedula')
 
+
+#Listado de pensiones del cemento e IVM del segundo grupo-------------------------------------------
+
+
+# nomina_cem_v2
+# 
+# 
+# nomina_ivm_v2
 
 #Guardar en un RData--------------------------------------------------------------------------------
 message( '\tGuardando pensiones de los jubilados' )

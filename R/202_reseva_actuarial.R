@@ -7,7 +7,6 @@ load(paste0( parametros$RData, 'IESS_tabla_mortalidad.RData'))
 load(paste0( parametros$RData, 'IESS_fallecidos.RData'))
 load(paste0( parametros$RData, 'IESS_nomina_concesiones.RData'))
 
-
 message("\tCalculando reserva matemática")
 
 #Pensionistas con derecho a IVM al corte------------------------------------------------------------
@@ -185,10 +184,171 @@ aux3 <- reserva_matematica %>%
 
 
 reserva_matematica <- rbind( aux1, aux3 )
+
+
+
+
+# 2. Reserva matemática del segundo grupo-----------------------------------------------------------
+
+aux_a <- beneficiarios_v2 %>%
+  dplyr::select( id,
+                 cedula, 
+                 fecha_derecho_ivm, 
+                 edad_derecho_ivm,
+                 edad,
+                 ric,
+                 ric_ivm,
+                 g,
+                 n,
+                 k )
+
+aux_b <- nomina_ivm_v2 %>% 
+  group_by( cedula ) %>%
+  filter( periodo == max( periodo ) ) %>%
+  distinct( cedula, .keep_all = TRUE ) %>%
+  ungroup( ) %>% 
+  dplyr::select( cedula,
+                 pension_ivm := valor_pension_aumentos )
+
+
+derecho_ivm_2 <- left_join( aux_a, aux_b, by = 'cedula' ) %>% 
+  filter( edad_derecho_ivm <= edad ) %>%
+  mutate( coef = pension_ivm / ric ) %>%
+  mutate( coef = ifelse( coef > 1, 1, coef ) ) %>%
+  mutate( pension_aumentos = ric ) %>% 
+  dplyr::select( id,
+                 cedula,
+                 g,
+                 ric,
+                 fecha_derecho_ivm,
+                 edad_derecho_ivm,
+                 coef,
+                 edad,
+                 pension_aumentos,
+                 n, 
+                 k) %>%
+  left_join(., tabla_mortalidad, by=c('edad','g') ) %>%
+  mutate( reserva_matematica = a_x * (1-coef) * pension_aumentos  * 13 ) %>%
+  mutate( renta_ivm = coef * pension_aumentos,
+          renta_ce = ( 1-coef ) * pension_aumentos )
+
+
+sin_derecho_ivm_2 <- left_join( aux_a, aux_b, by = 'cedula' ) %>% 
+  filter( edad_derecho_ivm > edad ) %>%
+  group_by( cedula ) %>%
+  distinct( cedula, .keep_all = TRUE ) %>%
+  ungroup() %>%
+  mutate( coef = ric_ivm / ric ) %>%
+  mutate( coef = ifelse( coef > 1, 1, coef ) ) %>%
+  mutate( pension_aumentos = ric ) %>% 
+  dplyr::select( id,
+                 cedula,
+                 g,
+                 ric,
+                 fecha_derecho_ivm,
+                 edad_derecho_ivm,
+                 coef,
+                 edad,
+                 pension_aumentos,
+                 n, 
+                 k) %>%
+  mutate( x_mas_k = edad + k + 1  ) %>%
+  left_join(., tabla_mortalidad, by=c('edad','g'))
+
+aux_1 <- tabla_mortalidad %>%
+  dplyr::select( edad, g, N_n:=N_x )
+
+aux_2 <- tabla_mortalidad %>%
+  dplyr::select( edad, g, N_x_mas_k:=N_x, D_x_mas_k := D_x )
+
+sin_derecho_ivm_2 <- sin_derecho_ivm_2 %>%
+  left_join(., aux_1, by = c('g'='g', 'n'='edad')) %>%
+  left_join(., aux_2, by = c('g'='g', 'x_mas_k'='edad')) %>%
+  mutate( renta_ivm = coef * pension_aumentos,
+          renta_ce = ( 1-coef ) * pension_aumentos )
+
+#Renta anticipada y temporal------------------------------------------------------------------------
+
+sin_derecho_ivm_2 <- sin_derecho_ivm_2 %>%
+  mutate( a_x_n = ( N_x - N_n )/ D_x )
+
+#Renta anticipada, diferida y vitalicia-------------------------------------------------------------
+
+sin_derecho_ivm_2 <- sin_derecho_ivm_2 %>%
+  mutate( a_n_w = N_x_mas_k / D_x_mas_k )
+
+#Reserva matemática---------------------------------------------------------------------------------
+
+sin_derecho_ivm_2 <- sin_derecho_ivm_2 %>%
+  mutate( res_mat_temporal =  a_x_n * ( 13 * pension_aumentos + 450 ) )  %>%
+  mutate( res_mat_diferida = a_n_w * ( (1 - coef) * 13 * pension_aumentos ) ) %>%
+  mutate( reserva_matematica = res_mat_temporal + res_mat_diferida )
+
+
+#Concatenar en un RData-----------------------------------------------------------------------------
+reserva_matematica_2 <- rbind( derecho_ivm_2 %>%
+                               mutate( N_n = NA,
+                                       N_x_mas_k = NA,
+                                       k = NA,
+                                       n = NA,
+                                       res_mat_temporal = NA,
+                                       res_mat_diferida = NA,
+                                       a_x_n = NA,
+                                       a_n_w = NA
+                               ) %>%
+                               dplyr::select( id,
+                                              cedula,
+                                              edad,
+                                              g,
+                                              #f1_renta,
+                                              fecha_derecho_ivm,
+                                              edad_derecho_ivm,
+                                              renta_ivm,
+                                              renta_ce,
+                                              pension_aumentos,
+                                              k,
+                                              a_x_n,
+                                              n,
+                                              res_mat_temporal,
+                                              a_n_w,
+                                              res_mat_diferida,
+                                              a_x,
+                                              reserva_matematica ),
+                             sin_derecho_ivm_2 %>%
+                               mutate( a_x = NA ) %>%
+                               dplyr::select( id,
+                                              cedula,
+                                              edad,
+                                              g,
+                                              #f1_renta,
+                                              fecha_derecho_ivm,
+                                              edad_derecho_ivm,
+                                              renta_ivm,
+                                              renta_ce,
+                                              pension_aumentos,
+                                              k,
+                                              a_x_n,
+                                              n,
+                                              res_mat_temporal,
+                                              a_n_w,
+                                              res_mat_diferida,
+                                              a_x,
+                                              reserva_matematica ) )
+
+#Beneficio de montepío------------------------------------------------------------------------------
+
+
+aux1 <- reserva_matematica_2 %>%
+  mutate( montepio = 0.1398 * reserva_matematica ) 
+
+
+reserva_matematica_2 <- aux1
+
 #Guardar en Rdata-----------------------------------------------------------------------------------
 message( '\tGuardando reservas matemáticas' )
 
 save( reserva_matematica,
+      reserva_matematica_2,
       file = paste0( parametros$RData, 'IESS_reserva_matematica.RData' ) )
 
 # Borrar elementos restantes -----------------------------------------------------------------------

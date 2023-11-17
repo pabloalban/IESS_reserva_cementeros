@@ -48,7 +48,7 @@ Instituto Ecuatoriano de Seguridad Social}}}}}
 \vspace{5cm}
 
 \vspace{1.3cm}
-\hspace*{5cm}{\fontsize{15}{18}{\bfseries{\selectfont{\textcolor{iess_blue}{Quito, 2 de septiembre de 2022}}}}}
+\hspace*{5cm}{\fontsize{15}{18}{\bfseries{\selectfont{\textcolor{iess_blue}{Quito, 16 de noviembre de 2023}}}}}
 \normalfont
 \clearpage
 

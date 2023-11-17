@@ -3,8 +3,9 @@ message( paste( rep('-', 100 ), collapse = '' ) )
 message( '\tLectura de lista de beneficarios' )
 
 #Cargando información financiera--------------------------------------------------------------------
-file<-paste0(parametros$Data, 'IESS_beneficiarios.xlsx' )
-file_b<-paste0(parametros$Data, 'BaseCementera.txt' )
+file <- paste0(parametros$Data, 'IESS_beneficiarios.xlsx' )
+file_b <- paste0(parametros$Data, 'BaseCementera.txt' )
+file_c <- paste0(parametros$Data, 'IESS_beneficiarios_2.xlsx' )
 
 #Cargar función tíldes a latex----------------------------------------------------------------------
 source( 'R/503_tildes_a_latex.R', encoding = 'UTF-8', echo = FALSE )
@@ -100,10 +101,49 @@ beneficiarios <- beneficiarios %>%
   mutate( k = ifelse( k <= 0, NA, k ) ) %>%
   mutate( anios_imposiciones = as.integer(anios_imposiciones) )
 
+
+#Lectura de beneficiarios por juicio----------------------------------------------------------------
+
+beneficiarios_v2 <- read_excel( file_c,
+                                sheet = 'beneficiarios',
+                                col_names = TRUE,
+                                col_types = NULL,
+                                na = "NA",
+                                skip = 0 ) %>% clean_names() %>%
+  mutate( fecha_de_nacimiento = as.Date(fecha_de_nacimiento, "%Y-%m-%d")) %>%
+  mutate( f1_renta = as.Date(f1_renta, "%Y-%m-%d")) %>%  
+  mutate( fecha_derecho_ivm = as.Date(fecha_derecho_ivm, "%Y-%m-%d")) %>%  
+  mutate( fecha_liquidacion_1 = as.Date(fecha_liquidacion_1, "%Y-%m-%d")) %>%
+  mutate( fecha_liquidacion_2 = as.Date(fecha_liquidacion_2, "%Y-%m-%d"))
+
+
+aux <- beneficiarios_v2 %>%
+  left_join(cargo, by='cedula') %>%
+  filter(CargoHomologado=='Administrativo') %>%
+  distinct(cedula, ocupacion_plani_normal,.keep_all = TRUE) %>% 
+  dplyr::select( cedula,
+                 ocupacion_plani_normal )
+
+
+beneficiarios_v2 <- beneficiarios_v2 %>% left_join( ., aux, by ='cedula' ) %>% 
+  mutate( ocupacion_plani =  ocupacion_plani_normal ) %>% 
+  dplyr::select( -ocupacion_plani_normal ) %>% 
+  mutate( edad_derecho_ivm = round(age_calc(fecha_de_nacimiento,
+                                            enddate = fecha_derecho_ivm,
+                                            units = "years"),0) ) %>%
+  mutate(edad =round(age_calc(fecha_de_nacimiento,
+                              enddate = as.Date("31/10/2023","%d/%m/%Y"),
+                              units = "years"),0)) %>%
+  mutate( n = edad_derecho_ivm ) %>%
+  mutate( k =  n - edad ) %>%
+  mutate( k = ifelse( k <= 0, NA, k ) ) %>%
+  mutate( anios_imposiciones = as.integer(anios_imposiciones) )
+
 #Guardando en un Rdata------------------------------------------------------------------------------
 message( '\tGuardando beneficiarios CE' )
 
 save( beneficiarios,
+      beneficiarios_v2,
       file = paste0( parametros$RData, 'IESS_beneficiarios.RData' ) )
 
 #Borrando data.frames-------------------------------------------------------------------------------

@@ -4,8 +4,524 @@
 \label{chp_valuacionactu}
 
 
-{\fontsize{8}{9}\selectfont
-\begin{longtable}[H]{cccccrrrrrrr}
+% {\fontsize{8}{9}\selectfont
+% \begin{longtable}[H]{cccccrrrrrrr}
+% \caption{Valores a tranferir al Fondo del Seguro IVM por Jubilación Especial de la Industria del Cemento}\\
+% \label{iess_tab_resultado} \\
+% \toprule
+% \multicolumn{1}{c}{Cédula}
+% %& \multicolumn{1}{c}{Apellidos y}
+% &\multicolumn{1}{c}{Edad}
+% 
+% %&\multicolumn{1}{c}{Fecha F1}
+% &\multicolumn{1}{c}{Fecha derecho}
+% &\multicolumn{1}{c}{Edad}
+% 
+% &\multicolumn{1}{c}{Reserva}
+% &\multicolumn{1}{c}{Beneficio}
+% 
+% &\multicolumn{1}{c}{Liquidación}
+% &\multicolumn{1}{c}{Intereses}
+% 
+% &\multicolumn{1}{c}{Nómina}
+% &\multicolumn{1}{c}{Intereses}
+% &\multicolumn{1}{c}{Gastos}
+% &\multicolumn{1}{c}{Total a}\\
+% 
+% \multicolumn{1}{c}{Ciudadanía}
+% %& \multicolumn{1}{c}{Nombres}
+% &\multicolumn{1}{c}{}
+% 
+% %& \multicolumn{1}{c}{renta}
+% & \multicolumn{1}{c}{IVM}
+% & \multicolumn{1}{c}{derecho IVM}
+% 
+% & \multicolumn{1}{c}{matemática (\$)}
+% & \multicolumn{1}{c}{Montepío (\$)}
+% 
+% & \multicolumn{1}{c}{(\$)}
+% & \multicolumn{1}{c}{Liquidación (\$)}
+% 
+% & \multicolumn{1}{c}{mensual (\$)}
+% & \multicolumn{1}{c}{Nómina (\$)}
+% & \multicolumn{1}{c}{administrativos (\$)}
+% &\multicolumn{1}{c}{a IVM (\$)}\\
+% \midrule
+% \endfirsthead
+% 
+% \toprule
+% \multicolumn{1}{c}{Cédula}
+% %& \multicolumn{1}{c}{Apellidos y}
+% &\multicolumn{1}{c}{Edad}
+% 
+% %&\multicolumn{1}{c}{Fecha F1}
+% &\multicolumn{1}{c}{Fecha derecho}
+% &\multicolumn{1}{c}{Edad}
+% 
+% &\multicolumn{1}{c}{Reserva}
+% &\multicolumn{1}{c}{Beneficio}
+% 
+% &\multicolumn{1}{c}{Liquidación}
+% &\multicolumn{1}{c}{Intereses}
+% 
+% &\multicolumn{1}{c}{Nómina}
+% &\multicolumn{1}{c}{Intereses}
+% &\multicolumn{1}{c}{Gastos}
+% &\multicolumn{1}{c}{Total a}\\
+% 
+% \multicolumn{1}{c}{Ciudadanía}
+% %& \multicolumn{1}{c}{Nombres}
+% &\multicolumn{1}{c}{}
+% 
+% %& \multicolumn{1}{c}{renta}
+% & \multicolumn{1}{c}{IVM}
+% & \multicolumn{1}{c}{derecho IVM}
+% 
+% & \multicolumn{1}{c}{matemática (\$)}
+% & \multicolumn{1}{c}{Montepío (\$)}
+% 
+% & \multicolumn{1}{c}{(\$)}
+% & \multicolumn{1}{c}{Liquidación (\$)}
+% 
+% & \multicolumn{1}{c}{mensual (\$)}
+% & \multicolumn{1}{c}{Nómina (\$)}
+% & \multicolumn{1}{c}{administrativos (\$)}
+% &\multicolumn{1}{c}{a IVM (\$)}\\
+% \midrule
+% \endhead
+% 
+% \bottomrule
+% \multicolumn{12}{r}{continúa...} \\
+% \endfoot
+% %\bottomrule
+% \caption*{\scriptsize Fuente: DSP y DAIE\\
+% Elaborado: DAIE \\}
+% \endlastfoot
+% \input{tablas/iess_tab_resultado.tex}
+% \end{longtable}
+% }
+% \end{landscape}
+% 
+% 
+% \clearpage
+% 
+% 
+% \section{Detalle de las reservas matemáticas}
+% \foreach \n in {1,2, ...,46}
+% {
+% \centering{\textbf{Detalle de las reservas matemáticas}}
+% 
+% \justify
+% El beneficiario \input{tablas/iess_nombre_\n.tex}, con cédula de ciudadanía \inputverbatim{tablas/iess_cedula_\n.tex}, registra los siguiente información al corte:
+% 
+% {\fontsize{10}{12}\selectfont
+%  \begin{longtable}[H]{lr}
+%         \caption{Datos del beneficiario}\\
+%         \label{iess_actualizacion_\n}\\
+% \toprule
+%  \multicolumn{1}{c}{Variable}
+% & \multicolumn{1}{c}{Valor}\\
+% \midrule
+% \endfirsthead
+% 
+% \toprule
+%  \multicolumn{1}{c}{Variable}
+% & \multicolumn{1}{c}{Valor}\\
+% \midrule
+% \endhead
+% 
+% \bottomrule
+% \multicolumn{2}{r}{continúa...} \\
+% \endfoot
+% %\bottomrule
+% \caption*{\scriptsize Fuente: DSP \\
+% Elaborado: DAIE}
+% \endlastfoot
+% \input{tablas/iess_datos_id_\n.tex}
+% \end{longtable}
+% }
+% 
+%  
+% \justify
+% Por liquidación de haberes adeudados por pensiones no percibidas desde el mes siguiente de la fecha de cese al 31 de agosto de 2022, el pensionista recibirá los siguientes valores, como se detalla en la tabla \ref{iess_liquidacion_\n}.
+% 
+% {\fontsize{7}{8}\selectfont
+%  \begin{longtable}[H]{cccrrrrrr}
+%         \caption{Liquidación de pensiones desde la fecha de derecho del cemento hasta el 31/08/2022}\\
+%         \label{iess_liquidacion_\n}\\
+% \toprule
+%  \multicolumn{1}{c}{Período}
+% &\multicolumn{1}{c}{Fecha}
+% &\multicolumn{1}{c}{Tasa de}
+% &\multicolumn{1}{c}{Pensión}
+% &\multicolumn{1}{c}{Decima}
+% &\multicolumn{1}{c}{Decima}
+% &\multicolumn{1}{c}{Total a}
+% &\multicolumn{1}{c}{Financiado}
+% &\multicolumn{1}{c}{Intereses}\\
+% 
+% &\multicolumn{1}{c}{derecho IVM}
+% &\multicolumn{1}{c}{interes (\%)}
+% &\multicolumn{1}{c}{concedida (USD)}
+% &\multicolumn{1}{c}{tercera (USD)}
+% &\multicolumn{1}{c}{cuarta (USD)}
+% &\multicolumn{1}{c}{pagar (USD)}
+% &\multicolumn{1}{c}{cemento (USD)}
+% &\multicolumn{1}{c}{para IVM (USD)}\\
+% \midrule
+% \endfirsthead
+% 
+% \toprule
+%  \multicolumn{1}{c}{Período}
+% &\multicolumn{1}{c}{Fecha}
+% &\multicolumn{1}{c}{Tasa de}
+% &\multicolumn{1}{c}{Pensión}
+% &\multicolumn{1}{c}{Decima}
+% &\multicolumn{1}{c}{Decima}
+% &\multicolumn{1}{c}{Total a}
+% &\multicolumn{1}{c}{Parte}
+% &\multicolumn{1}{c}{Intereses}\\
+% 
+% &\multicolumn{1}{c}{derecho IVM}
+% &\multicolumn{1}{c}{interes (\%)}
+% &\multicolumn{1}{c}{concedida (USD)}
+% &\multicolumn{1}{c}{tercera (USD)}
+% &\multicolumn{1}{c}{cuarta (USD)}
+% &\multicolumn{1}{c}{pagar (USD)}
+% &\multicolumn{1}{c}{cemento (USD)}
+% &\multicolumn{1}{c}{para IVM (USD)}\\
+% \midrule
+% \endhead
+% 
+% \bottomrule
+% \multicolumn{9}{r}{continúa...} \\
+% \endfoot
+% %\bottomrule
+% \caption*{\scriptsize Fuente: DSP \\
+% Elaborado: DAIE}
+% \endlastfoot
+% \input{tablas/iess_liquidacion_\n.tex}
+% \end{longtable}
+% }
+% 
+% 
+% \justify
+% Debido a los pagos de pensiones adeudadas, se utilizó fondos del Seguro de IVM para pagar estas liquidaciones, por lo cual el Fondo de la Jubilación Especial de la Industria del Cemento debe cancelar los debidos intereses a una tasa de rendimiento mínimo de las inversiones (8,21\%). En la tabla \ref{iess_interes_individual_\n}, se presenta los cálculos correspondientes.
+% 
+% {\fontsize{8}{8}\selectfont
+%  \begin{longtable}[H]{lccccrr}
+%         \caption{Actualización del último sueldo a dólares al año 2000}\\
+%         \label{iess_interes_individual_\n}\\
+% \toprule
+%  \multicolumn{1}{c}{Concepto:}
+% &\multicolumn{1}{c}{Cédula}
+% &\multicolumn{1}{c}{Fecha pago}
+% &\multicolumn{1}{c}{Meses}
+% &\multicolumn{1}{c}{Tasa de }
+% &\multicolumn{1}{c}{Valor por}
+% &\multicolumn{1}{c}{Intereses}\\
+% 
+% &\multicolumn{1}{c}{Ciudadanía}
+% &\multicolumn{1}{c}{}
+% &\multicolumn{1}{c}{transcurridos}
+% &\multicolumn{1}{c}{ineteres (\%)}
+% &\multicolumn{1}{c}{liquidación (USD)}
+% &\multicolumn{1}{c}{(USD)}\\
+% \midrule
+% \endfirsthead
+% 
+% \toprule
+%  \multicolumn{1}{c}{Concepto:}
+% &\multicolumn{1}{c}{Cédula}
+% &\multicolumn{1}{c}{Fecha pago}
+% &\multicolumn{1}{c}{Meses}
+% &\multicolumn{1}{c}{Tasa de }
+% &\multicolumn{1}{c}{Valor por}
+% &\multicolumn{1}{c}{Intereses}\\
+% 
+% &\multicolumn{1}{c}{Ciudadanía}
+% &\multicolumn{1}{c}{}
+% &\multicolumn{1}{c}{transcurridos}
+% &\multicolumn{1}{c}{ineteres (\%)}
+% &\multicolumn{1}{c}{liquidación (USD)}
+% &\multicolumn{1}{c}{(USD)}\\
+% \midrule
+% \endhead
+% 
+% \bottomrule
+% \multicolumn{7}{r}{continúa...} \\
+% \endfoot
+% %\bottomrule
+% \caption*{\scriptsize Fuente: DSP \\
+% Elaborado: DAIE}
+% \endlastfoot
+% \input{tablas/iess_interes_individual_\n.tex}
+% \end{longtable}
+% }
+% 
+% \justify
+% A continuación, se presenta el calculo de la reserva matemática vitalicia requerida para pagar pensiones hasta la fecha de su muerte, en la tabla \ref{iess_reserva_individual_\n}.
+% 
+% {\fontsize{10}{11}\selectfont
+%  \begin{longtable}[H]{lr}
+%         \caption{Cálculo de la reserva matemática vitalicia}\\
+%         \label{iess_reserva_individual_\n}\\
+% \toprule
+%  \multicolumn{1}{c}{Concepto:}
+% & \multicolumn{1}{c}{Valor}\\
+% \midrule
+% \endfirsthead
+% 
+% \toprule
+%  \multicolumn{1}{c}{Concepto:}
+% & \multicolumn{1}{c}{Valor}\\
+% \midrule
+% \endhead
+% 
+% \bottomrule
+% \multicolumn{2}{r}{continúa...} \\
+% \endfoot
+% %\bottomrule
+% \caption*{\scriptsize Elaborado: DAIE \\}
+% \endlastfoot
+% \input{tablas/iess_reserva_individual_\n.tex}
+% \end{longtable}
+% }
+% 
+% \justify
+% Por último, la totalidad de los valores que deben ser transferidos al Fondo del Seguro de IVM para cubrir los beneficios del pensionista \input{tablas/iess_nombre_\n.tex}, con cédula de ciudadanía \inputverbatim{tablas/iess_cedula_\n.tex}, se resumen en la siguiente tabla \ref{iess_resultado_individual_\n}.
+% 
+% {\fontsize{10}{11}\selectfont
+%  \begin{longtable}[H]{lr}
+%         \caption{Valores a transferir al Fondo del Seguro de IVM}\\
+%         \label{iess_resultado_individual_\n}\\
+% \toprule
+%  \multicolumn{1}{c}{Concepto:}
+% & \multicolumn{1}{c}{Valor (USD)}\\
+% \midrule
+% \endfirsthead
+% 
+% \toprule
+%  \multicolumn{1}{c}{Concepto:}
+% & \multicolumn{1}{c}{Valor (USD)}\\
+% \midrule
+% \endhead
+% 
+% \bottomrule
+% \multicolumn{2}{r}{continúa...} \\
+% \endfoot
+% %\bottomrule
+% \caption*{\scriptsize Elaborado: DAIE \\}
+% \endlastfoot
+% \input{tablas/iess_resultado_individual_\n.tex}
+% \end{longtable}
+% }
+% 
+% 
+% \clearpage
+% }
+% 
+% %Fallecidos-----------------------------------------------------------------------------------------
+% 
+% \foreach \n in {47,48,49}
+% {
+% \centering{\textbf{Liquidación de Jubilación Especial de los Trabajadores de la Industria del Cemento}}
+% 
+% \justify
+% El beneficiario \input{tablas/iess_nombre_\n.tex}, con cédula de ciudadanía \inputverbatim{tablas/iess_cedula_\n.tex}, registra los siguiente información al corte:
+% 
+% {\fontsize{10}{12}\selectfont
+%  \begin{longtable}[H]{lr}
+%         \caption{Datos del beneficiario}\\
+%         \label{iess_actualizacion_\n}\\
+% \toprule
+%  \multicolumn{1}{c}{Variable}
+% & \multicolumn{1}{c}{Valor}\\
+% \midrule
+% \endfirsthead
+% 
+% \toprule
+%  \multicolumn{1}{c}{Variable}
+% & \multicolumn{1}{c}{Valor}\\
+% \midrule
+% \endhead
+% 
+% \bottomrule
+% \multicolumn{2}{r}{continúa...} \\
+% \endfoot
+% %\bottomrule
+% \caption*{\scriptsize Fuente: DSP \\
+% Elaborado: DAIE}
+% \endlastfoot
+% \input{tablas/iess_datos_id_\n.tex}
+% \end{longtable}
+% }
+% 
+%  
+% \justify
+% Por liquidación de haberes adeudados por pensiones no percibidas desde el mes siguiente de la fecha de cese al 31 de agosto de 2022, el pensionista recibirá los siguientes valores, como se detalla en la tabla \ref{iess_liquidacion_\n}.
+% 
+% {\fontsize{7}{8}\selectfont
+%  \begin{longtable}[H]{ccccrrrrrr}
+%         \caption{Liquidación de pensiones desde la fecha de derecho del cemento hasta el 31/08/2022}\\
+%         \label{iess_liquidacion_\n}\\
+% \toprule
+%  \multicolumn{1}{c}{Período}
+% %&\multicolumn{1}{c}{Cédula}
+% &\multicolumn{1}{c}{F1 Renta}
+% &\multicolumn{1}{c}{Fecha}
+% &\multicolumn{1}{c}{Pensión}
+% &\multicolumn{1}{c}{Renta}
+% &\multicolumn{1}{c}{Decima}
+% &\multicolumn{1}{c}{Decima}
+% &\multicolumn{1}{c}{Total a}
+% &\multicolumn{1}{c}{Financiado}
+% &\multicolumn{1}{c}{Financiado}\\
+% 
+% %&\multicolumn{1}{c}{Ciudadanía}
+% &
+% &\multicolumn{1}{c}{derecho IVM}
+% &\multicolumn{1}{c}{máxima (USD)}
+% &\multicolumn{1}{c}{concedida (USD)}
+% &\multicolumn{1}{c}{tercera (USD)}
+% &\multicolumn{1}{c}{cuarta (USD)}
+% &\multicolumn{1}{c}{pagar (USD)}
+% &\multicolumn{1}{c}{IVM (USD)}
+% &\multicolumn{1}{c}{Cemento (USD)}\\
+% \midrule
+% \endfirsthead
+% 
+% \toprule
+%  \multicolumn{1}{c}{Período}
+% %&\multicolumn{1}{c}{Cédula}
+% &\multicolumn{1}{c}{F1 Renta}
+% &\multicolumn{1}{c}{Fecha}
+% &\multicolumn{1}{c}{Pensión}
+% &\multicolumn{1}{c}{Renta}
+% &\multicolumn{1}{c}{Decima}
+% &\multicolumn{1}{c}{Decima}
+% &\multicolumn{1}{c}{Total a}
+% &\multicolumn{1}{c}{Financiado}
+% &\multicolumn{1}{c}{Financiado}\\
+% 
+% %&\multicolumn{1}{c}{Ciudadanía}
+% &
+% &\multicolumn{1}{c}{derecho IVM}
+% &\multicolumn{1}{c}{máxima (USD)}
+% &\multicolumn{1}{c}{concedida (USD)}
+% &\multicolumn{1}{c}{tercera (USD)}
+% &\multicolumn{1}{c}{cuarta (USD)}
+% &\multicolumn{1}{c}{pagar (USD)}
+% &\multicolumn{1}{c}{IVM (USD)}
+% &\multicolumn{1}{c}{Cemento (USD)}\\
+% \midrule
+% \endhead
+% 
+% \bottomrule
+% \multicolumn{10}{r}{continúa...} \\
+% \endfoot
+% %\bottomrule
+% \caption*{\scriptsize Fuente: DSP \\
+% Elaborado: DAIE}
+% \endlastfoot
+% \input{tablas/iess_liquidacion_\n.tex}
+% \end{longtable}
+% }
+% 
+% 
+% \justify
+% Debido a los pagos de pensiones adeudadas, se utilizó fondos del Seguro de IVM para pagar estas liquidaciones, por lo cual el Fondo de la Jubilación Especial de la Industria del Cemento debe cancelar los debidos intereses a una tasa de rendimiento mínimo de las inversiones (8,21\%). En la tabla \ref{iess_interes_individual_\n}, se presenta los cálculos correspondientes.
+% 
+% {\fontsize{8}{8}\selectfont
+%  \begin{longtable}[H]{lccccrr}
+%         \caption{Inteses por el préstamo del Seguro de IVM, en valores cancelados por
+% pensiones}\\
+%         \label{iess_interes_individual_\n}\\
+% \toprule
+%  \multicolumn{1}{c}{Concepto:}
+% &\multicolumn{1}{c}{Cédula}
+% &\multicolumn{1}{c}{Fecha pago}
+% &\multicolumn{1}{c}{Meses}
+% &\multicolumn{1}{c}{Tasa de }
+% &\multicolumn{1}{c}{Valor por}
+% &\multicolumn{1}{c}{Intereses}\\
+% 
+% &\multicolumn{1}{c}{Ciudadanía}
+% &\multicolumn{1}{c}{}
+% &\multicolumn{1}{c}{transcurridos}
+% &\multicolumn{1}{c}{ineteres (\%)}
+% &\multicolumn{1}{c}{liquidación (USD)}
+% &\multicolumn{1}{c}{(USD)}\\
+% \midrule
+% \endfirsthead
+% 
+% \toprule
+%  \multicolumn{1}{c}{Concepto:}
+% &\multicolumn{1}{c}{Cédula}
+% &\multicolumn{1}{c}{Fecha pago}
+% &\multicolumn{1}{c}{Meses}
+% &\multicolumn{1}{c}{Tasa de }
+% &\multicolumn{1}{c}{Valor por}
+% &\multicolumn{1}{c}{Intereses}\\
+% 
+% &\multicolumn{1}{c}{Ciudadanía}
+% &\multicolumn{1}{c}{}
+% &\multicolumn{1}{c}{transcurridos}
+% &\multicolumn{1}{c}{ineteres (\%)}
+% &\multicolumn{1}{c}{liquidación (USD)}
+% &\multicolumn{1}{c}{(USD)}\\
+% \midrule
+% \endhead
+% 
+% \bottomrule
+% \multicolumn{7}{r}{continúa...} \\
+% \endfoot
+% %\bottomrule
+% \caption*{\scriptsize Fuente: DSP \\
+% Elaborado: DAIE}
+% \endlastfoot
+% \input{tablas/iess_interes_individual_\n.tex}
+% \end{longtable}
+% }
+% 
+% 
+% \justify
+% Por último, la totalidad de los valores que deben ser transferidos al Fondo del Seguro de IVM para cubrir los beneficios del pensionista \input{tablas/iess_nombre_\n.tex}, con cédula de ciudadanía \inputverbatim{tablas/iess_cedula_\n.tex}, se resumen en la siguiente tabla \ref{iess_resultado_individual_\n}.
+% 
+% {\fontsize{10}{11}\selectfont
+%  \begin{longtable}[H]{lr}
+%         \caption{Valores a transferir al Fondo del Seguro de IVM}\\
+%         \label{iess_resultado_individual_\n}\\
+% \toprule
+%  \multicolumn{1}{c}{Concepto:}
+% & \multicolumn{1}{c}{Valor (USD)}\\
+% \midrule
+% \endfirsthead
+% 
+% \toprule
+%  \multicolumn{1}{c}{Concepto:}
+% & \multicolumn{1}{c}{Valor (USD)}\\
+% \midrule
+% \endhead
+% 
+% \bottomrule
+% \multicolumn{2}{r}{continúa...} \\
+% \endfoot
+% %\bottomrule
+% \caption*{\scriptsize Elaborado: DAIE \\}
+% \endlastfoot
+% \input{tablas/iess_resultado_individual_\n.tex}
+% \end{longtable}
+% }
+% 
+% 
+% \clearpage
+% }
+
+
+
+{\fontsize{8.5}{12}\selectfont
+\begin{longtable}[H]{cccccrrrrrrrr}
 \caption{Valores a tranferir al Fondo del Seguro IVM por Jubilación Especial de la Industria del Cemento}\\
 \label{iess_tab_resultado} \\
 \toprule
@@ -14,38 +530,40 @@
 &\multicolumn{1}{c}{Edad}
 
 %&\multicolumn{1}{c}{Fecha F1}
-&\multicolumn{1}{c}{Fecha derecho}
+&\multicolumn{1}{c}{Fecha}
 &\multicolumn{1}{c}{Edad}
 
 &\multicolumn{1}{c}{Reserva}
 &\multicolumn{1}{c}{Beneficio}
 
-&\multicolumn{1}{c}{Liquidación}
+&\multicolumn{1}{c}{Peritaje}
 &\multicolumn{1}{c}{Intereses}
 
 &\multicolumn{1}{c}{Nómina}
 &\multicolumn{1}{c}{Intereses}
 &\multicolumn{1}{c}{Gastos}
-&\multicolumn{1}{c}{Total a}\\
+&\multicolumn{1}{c}{Total a}
+&\multicolumn{1}{c}{Cargo}\\
 
 \multicolumn{1}{c}{Ciudadanía}
 %& \multicolumn{1}{c}{Nombres}
 &\multicolumn{1}{c}{}
 
 %& \multicolumn{1}{c}{renta}
-& \multicolumn{1}{c}{IVM}
+& \multicolumn{1}{c}{derecho IVM}
 & \multicolumn{1}{c}{derecho IVM}
 
 & \multicolumn{1}{c}{matemática (\$)}
 & \multicolumn{1}{c}{Montepío (\$)}
 
 & \multicolumn{1}{c}{(\$)}
-& \multicolumn{1}{c}{Liquidación (\$)}
+& \multicolumn{1}{c}{Peritaje (\$)}
 
 & \multicolumn{1}{c}{mensual (\$)}
 & \multicolumn{1}{c}{Nómina (\$)}
-& \multicolumn{1}{c}{administrativos (\$)}
-&\multicolumn{1}{c}{a IVM (\$)}\\
+& \multicolumn{1}{c}{adm (\$)}
+& \multicolumn{1}{c}{a IVM (\$)}
+& \\
 \midrule
 \endfirsthead
 
@@ -61,60 +579,66 @@
 &\multicolumn{1}{c}{Reserva}
 &\multicolumn{1}{c}{Beneficio}
 
-&\multicolumn{1}{c}{Liquidación}
+&\multicolumn{1}{c}{Peritaje}
 &\multicolumn{1}{c}{Intereses}
 
 &\multicolumn{1}{c}{Nómina}
 &\multicolumn{1}{c}{Intereses}
 &\multicolumn{1}{c}{Gastos}
-&\multicolumn{1}{c}{Total a}\\
+&\multicolumn{1}{c}{Total a}
+&\multicolumn{1}{c}{Cargo}\\
 
 \multicolumn{1}{c}{Ciudadanía}
 %& \multicolumn{1}{c}{Nombres}
 &\multicolumn{1}{c}{}
 
 %& \multicolumn{1}{c}{renta}
-& \multicolumn{1}{c}{IVM}
+& \multicolumn{1}{c}{derecho IVM}
 & \multicolumn{1}{c}{derecho IVM}
 
 & \multicolumn{1}{c}{matemática (\$)}
 & \multicolumn{1}{c}{Montepío (\$)}
 
 & \multicolumn{1}{c}{(\$)}
-& \multicolumn{1}{c}{Liquidación (\$)}
+& \multicolumn{1}{c}{Peritaje (\$)}
 
 & \multicolumn{1}{c}{mensual (\$)}
 & \multicolumn{1}{c}{Nómina (\$)}
-& \multicolumn{1}{c}{administrativos (\$)}
-&\multicolumn{1}{c}{a IVM (\$)}\\
+& \multicolumn{1}{c}{adm (\$)}
+& \multicolumn{1}{c}{a IVM (\$)}
+& \\
 \midrule
 \endhead
 
 \bottomrule
-\multicolumn{12}{r}{continúa...} \\
+\multicolumn{13}{r}{continúa...} \\
 \endfoot
 %\bottomrule
 \caption*{\scriptsize Fuente: DSP y DAIE\\
 Elaborado: DAIE \\}
 \endlastfoot
-\input{tablas/iess_tab_resultado.tex}
+\input{tablas/iess_tab_resultado_2.tex}
 \end{longtable}
 }
 \end{landscape}
-% 
+
+
+
+
+
 
 \clearpage
 
 
 \section{Detalle de las reservas matemáticas}
-\foreach \n in {1,2, ...,46}
+\foreach \n in {50,51, ...,65}
 {
 \centering{\textbf{Detalle de las reservas matemáticas}}
 
 \justify
-El beneficiario \input{tablas/iess_nombre_\n.tex}, con cédula de ciudadanía \inputverbatim{tablas/iess_cedula_\n.tex}, registra los siguiente información al corte:
+El beneficiario \input{tablas/iess_nombre_\n.tex} con cédula de ciudadanía \inputverbatim{tablas/iess_cedula_\n.tex} registra los siguiente información al corte:
 
-{\fontsize{10}{12}\selectfont
+{\fontsize{11}{13}\selectfont
  \begin{longtable}[H]{lr}
         \caption{Datos del beneficiario}\\
         \label{iess_actualizacion_\n}\\
@@ -143,11 +667,12 @@ Elaborado: DAIE}
 
  
 \justify
-Por liquidación de haberes adeudados por pensiones no percibidas desde el mes siguiente de la fecha de cese al 31 de agosto de 2022, el pensionista recibirá los siguientes valores, como se detalla en la tabla \ref{iess_liquidacion_\n}.
 
-{\fontsize{7}{8}\selectfont
+Por fallo de la corte se procedió a la entrega inmediata de la jubilación especial de la industria del cemento, a continuación, se presenta los pensiones pagadas desde el F1 de la renta del cemento hasta el 31 de octubre de 2023 en la tabla \ref{iess_liquidacion_\n}.
+
+{\fontsize{8}{10}\selectfont
  \begin{longtable}[H]{cccrrrrrr}
-        \caption{Liquidación de pensiones desde la fecha de derecho del cemento hasta el 31/08/2022}\\
+        \caption{Liquidación de pensiones desde la fecha de derecho del cemento hasta el 31/10/2023}\\
         \label{iess_liquidacion_\n}\\
 \toprule
  \multicolumn{1}{c}{Período}
@@ -206,60 +731,6 @@ Elaborado: DAIE}
 
 
 \justify
-Debido a los pagos de pensiones adeudadas, se utilizó fondos del Seguro de IVM para pagar estas liquidaciones, por lo cual el Fondo de la Jubilación Especial de la Industria del Cemento debe cancelar los debidos intereses a una tasa de rendimiento mínimo de las inversiones (8,21\%). En la tabla \ref{iess_interes_individual_\n}, se presenta los cálculos correspondientes.
-
-{\fontsize{8}{8}\selectfont
- \begin{longtable}[H]{lccccrr}
-        \caption{Actualización del último sueldo a dólares al año 2000}\\
-        \label{iess_interes_individual_\n}\\
-\toprule
- \multicolumn{1}{c}{Concepto:}
-&\multicolumn{1}{c}{Cédula}
-&\multicolumn{1}{c}{Fecha pago}
-&\multicolumn{1}{c}{Meses}
-&\multicolumn{1}{c}{Tasa de }
-&\multicolumn{1}{c}{Valor por}
-&\multicolumn{1}{c}{Intereses}\\
-
-&\multicolumn{1}{c}{Ciudadanía}
-&\multicolumn{1}{c}{}
-&\multicolumn{1}{c}{transcurridos}
-&\multicolumn{1}{c}{ineteres (\%)}
-&\multicolumn{1}{c}{liquidación (USD)}
-&\multicolumn{1}{c}{(USD)}\\
-\midrule
-\endfirsthead
-
-\toprule
- \multicolumn{1}{c}{Concepto:}
-&\multicolumn{1}{c}{Cédula}
-&\multicolumn{1}{c}{Fecha pago}
-&\multicolumn{1}{c}{Meses}
-&\multicolumn{1}{c}{Tasa de }
-&\multicolumn{1}{c}{Valor por}
-&\multicolumn{1}{c}{Intereses}\\
-
-&\multicolumn{1}{c}{Ciudadanía}
-&\multicolumn{1}{c}{}
-&\multicolumn{1}{c}{transcurridos}
-&\multicolumn{1}{c}{ineteres (\%)}
-&\multicolumn{1}{c}{liquidación (USD)}
-&\multicolumn{1}{c}{(USD)}\\
-\midrule
-\endhead
-
-\bottomrule
-\multicolumn{7}{r}{continúa...} \\
-\endfoot
-%\bottomrule
-\caption*{\scriptsize Fuente: DSP \\
-Elaborado: DAIE}
-\endlastfoot
-\input{tablas/iess_interes_individual_\n.tex}
-\end{longtable}
-}
-
-\justify
 A continuación, se presenta el calculo de la reserva matemática vitalicia requerida para pagar pensiones hasta la fecha de su muerte, en la tabla \ref{iess_reserva_individual_\n}.
 
 {\fontsize{10}{11}\selectfont
@@ -289,7 +760,7 @@ A continuación, se presenta el calculo de la reserva matemática vitalicia requ
 }
 
 \justify
-Por último, la totalidad de los valores que deben ser transferidos al Fondo del Seguro de IVM para cubrir los beneficios del pensionista \input{tablas/iess_nombre_\n.tex}, con cédula de ciudadanía \inputverbatim{tablas/iess_cedula_\n.tex}, se resumen en la siguiente tabla \ref{iess_resultado_individual_\n}.
+Por último, la totalidad de los valores que deben ser transferidos al Fondo del Seguro de IVM para cubrir los beneficios del pensionista \input{tablas/iess_nombre_\n.tex} con cédula de ciudadanía \inputverbatim{tablas/iess_cedula_\n.tex} se resumen en la siguiente tabla \ref{iess_resultado_individual_\n}.
 
 {\fontsize{10}{11}\selectfont
  \begin{longtable}[H]{lr}
@@ -317,203 +788,9 @@ Por último, la totalidad de los valores que deben ser transferidos al Fondo del
 \end{longtable}
 }
 
-
-\clearpage
-}
-
-%Fallecidos-----------------------------------------------------------------------------------------
-
-\foreach \n in {47,48,49}
-{
-\centering{\textbf{Liquidación de Jubilación Especial de los Trabajadores de la Industria del Cemento}}
-
 \justify
-El beneficiario \input{tablas/iess_nombre_\n.tex}, con cédula de ciudadanía \inputverbatim{tablas/iess_cedula_\n.tex}, registra los siguiente información al corte:
-
-{\fontsize{10}{12}\selectfont
- \begin{longtable}[H]{lr}
-        \caption{Datos del beneficiario}\\
-        \label{iess_actualizacion_\n}\\
-\toprule
- \multicolumn{1}{c}{Variable}
-& \multicolumn{1}{c}{Valor}\\
-\midrule
-\endfirsthead
-
-\toprule
- \multicolumn{1}{c}{Variable}
-& \multicolumn{1}{c}{Valor}\\
-\midrule
-\endhead
-
-\bottomrule
-\multicolumn{2}{r}{continúa...} \\
-\endfoot
-%\bottomrule
-\caption*{\scriptsize Fuente: DSP \\
-Elaborado: DAIE}
-\endlastfoot
-\input{tablas/iess_datos_id_\n.tex}
-\end{longtable}
-}
-
+ Cabe señalar que los valores pendientes correspondientes a los haberes por jubilación del cemento entre la fecha de cese y la fecha F1 de la renta del cemento, se encuentran en litigio.
  
-\justify
-Por liquidación de haberes adeudados por pensiones no percibidas desde el mes siguiente de la fecha de cese al 31 de agosto de 2022, el pensionista recibirá los siguientes valores, como se detalla en la tabla \ref{iess_liquidacion_\n}.
-
-{\fontsize{7}{8}\selectfont
- \begin{longtable}[H]{ccccrrrrrr}
-        \caption{Liquidación de pensiones desde la fecha de derecho del cemento hasta el 31/08/2022}\\
-        \label{iess_liquidacion_\n}\\
-\toprule
- \multicolumn{1}{c}{Período}
-%&\multicolumn{1}{c}{Cédula}
-&\multicolumn{1}{c}{F1 Renta}
-&\multicolumn{1}{c}{Fecha}
-&\multicolumn{1}{c}{Pensión}
-&\multicolumn{1}{c}{Renta}
-&\multicolumn{1}{c}{Decima}
-&\multicolumn{1}{c}{Decima}
-&\multicolumn{1}{c}{Total a}
-&\multicolumn{1}{c}{Financiado}
-&\multicolumn{1}{c}{Financiado}\\
-
-%&\multicolumn{1}{c}{Ciudadanía}
-&
-&\multicolumn{1}{c}{derecho IVM}
-&\multicolumn{1}{c}{máxima (USD)}
-&\multicolumn{1}{c}{concedida (USD)}
-&\multicolumn{1}{c}{tercera (USD)}
-&\multicolumn{1}{c}{cuarta (USD)}
-&\multicolumn{1}{c}{pagar (USD)}
-&\multicolumn{1}{c}{IVM (USD)}
-&\multicolumn{1}{c}{Cemento (USD)}\\
-\midrule
-\endfirsthead
-
-\toprule
- \multicolumn{1}{c}{Período}
-%&\multicolumn{1}{c}{Cédula}
-&\multicolumn{1}{c}{F1 Renta}
-&\multicolumn{1}{c}{Fecha}
-&\multicolumn{1}{c}{Pensión}
-&\multicolumn{1}{c}{Renta}
-&\multicolumn{1}{c}{Decima}
-&\multicolumn{1}{c}{Decima}
-&\multicolumn{1}{c}{Total a}
-&\multicolumn{1}{c}{Financiado}
-&\multicolumn{1}{c}{Financiado}\\
-
-%&\multicolumn{1}{c}{Ciudadanía}
-&
-&\multicolumn{1}{c}{derecho IVM}
-&\multicolumn{1}{c}{máxima (USD)}
-&\multicolumn{1}{c}{concedida (USD)}
-&\multicolumn{1}{c}{tercera (USD)}
-&\multicolumn{1}{c}{cuarta (USD)}
-&\multicolumn{1}{c}{pagar (USD)}
-&\multicolumn{1}{c}{IVM (USD)}
-&\multicolumn{1}{c}{Cemento (USD)}\\
-\midrule
-\endhead
-
-\bottomrule
-\multicolumn{10}{r}{continúa...} \\
-\endfoot
-%\bottomrule
-\caption*{\scriptsize Fuente: DSP \\
-Elaborado: DAIE}
-\endlastfoot
-\input{tablas/iess_liquidacion_\n.tex}
-\end{longtable}
-}
-
-
-\justify
-Debido a los pagos de pensiones adeudadas, se utilizó fondos del Seguro de IVM para pagar estas liquidaciones, por lo cual el Fondo de la Jubilación Especial de la Industria del Cemento debe cancelar los debidos intereses a una tasa de rendimiento mínimo de las inversiones (8,21\%). En la tabla \ref{iess_interes_individual_\n}, se presenta los cálculos correspondientes.
-
-{\fontsize{8}{8}\selectfont
- \begin{longtable}[H]{lccccrr}
-        \caption{Inteses por el préstamo del Seguro de IVM, en valores cancelados por
-pensiones}\\
-        \label{iess_interes_individual_\n}\\
-\toprule
- \multicolumn{1}{c}{Concepto:}
-&\multicolumn{1}{c}{Cédula}
-&\multicolumn{1}{c}{Fecha pago}
-&\multicolumn{1}{c}{Meses}
-&\multicolumn{1}{c}{Tasa de }
-&\multicolumn{1}{c}{Valor por}
-&\multicolumn{1}{c}{Intereses}\\
-
-&\multicolumn{1}{c}{Ciudadanía}
-&\multicolumn{1}{c}{}
-&\multicolumn{1}{c}{transcurridos}
-&\multicolumn{1}{c}{ineteres (\%)}
-&\multicolumn{1}{c}{liquidación (USD)}
-&\multicolumn{1}{c}{(USD)}\\
-\midrule
-\endfirsthead
-
-\toprule
- \multicolumn{1}{c}{Concepto:}
-&\multicolumn{1}{c}{Cédula}
-&\multicolumn{1}{c}{Fecha pago}
-&\multicolumn{1}{c}{Meses}
-&\multicolumn{1}{c}{Tasa de }
-&\multicolumn{1}{c}{Valor por}
-&\multicolumn{1}{c}{Intereses}\\
-
-&\multicolumn{1}{c}{Ciudadanía}
-&\multicolumn{1}{c}{}
-&\multicolumn{1}{c}{transcurridos}
-&\multicolumn{1}{c}{ineteres (\%)}
-&\multicolumn{1}{c}{liquidación (USD)}
-&\multicolumn{1}{c}{(USD)}\\
-\midrule
-\endhead
-
-\bottomrule
-\multicolumn{7}{r}{continúa...} \\
-\endfoot
-%\bottomrule
-\caption*{\scriptsize Fuente: DSP \\
-Elaborado: DAIE}
-\endlastfoot
-\input{tablas/iess_interes_individual_\n.tex}
-\end{longtable}
-}
-
-
-\justify
-Por último, la totalidad de los valores que deben ser transferidos al Fondo del Seguro de IVM para cubrir los beneficios del pensionista \input{tablas/iess_nombre_\n.tex}, con cédula de ciudadanía \inputverbatim{tablas/iess_cedula_\n.tex}, se resumen en la siguiente tabla \ref{iess_resultado_individual_\n}.
-
-{\fontsize{10}{11}\selectfont
- \begin{longtable}[H]{lr}
-        \caption{Valores a transferir al Fondo del Seguro de IVM}\\
-        \label{iess_resultado_individual_\n}\\
-\toprule
- \multicolumn{1}{c}{Concepto:}
-& \multicolumn{1}{c}{Valor (USD)}\\
-\midrule
-\endfirsthead
-
-\toprule
- \multicolumn{1}{c}{Concepto:}
-& \multicolumn{1}{c}{Valor (USD)}\\
-\midrule
-\endhead
-
-\bottomrule
-\multicolumn{2}{r}{continúa...} \\
-\endfoot
-%\bottomrule
-\caption*{\scriptsize Elaborado: DAIE \\}
-\endlastfoot
-\input{tablas/iess_resultado_individual_\n.tex}
-\end{longtable}
-}
-
-
 \clearpage
 }
+
